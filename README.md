@@ -31,7 +31,7 @@ This emits `Luma-Setup-<version>-x64.exe` (the NSIS installer) and `Luma-Portabl
 
 ## If `npm run dev` says Electron failed to install
 
-This happens when `node_modules` was copied from an environment where Electron's post-install binary download was skipped. Stop Vite, then run this in PowerShell from the project folder:
+This happens when `node_modules` was copied from an environment where Electron's post-install binary download was skipped. Stop Vite, then run this in PowerShell from the project folder. Do this only for the dev command, not to build the packaged EXE:
 
 ```powershell
 Remove-Item -Recurse -Force .\node_modules

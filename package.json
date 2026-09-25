@@ -45,7 +45,7 @@
     "npmRebuild": false,
     "portable": {
       "artifactName": "${productName}-Portable-${version}-${arch}.${ext}",
-      "requestExecutionLevel": "asInvoker"
+      "requestExecutionLevel": "user"
     }
   },
   "dependencies": {
