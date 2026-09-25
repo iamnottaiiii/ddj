@@ -27,3 +27,7 @@ All data is held in the browser's IndexedDB database `workspace-local`. Settings
 Working local tools: Writer (rich text, find/replace, print, HTML/Markdown/text export), Sheets (editable grid, formulas, CSV import/export), Slides (drag canvas, speaker notes, presentation, portable HTML export), Notes, local Calendar and Tasks, Forms with local responses/packages, and Board with SVG export. Use the command palette (`Ctrl K`) for navigation and creation.
 
 All runtime assets are bundled locally; `public/sw.js` caches static app files after first load.
+
+## GitHub Pages
+
+The production build uses relative asset paths, so it works on both a domain root and a repository Pages path such as `https://username.github.io/ddj/`. A Pages workflow is included at `.github/workflows/deploy-pages.yml`; enable **Settings → Pages → GitHub Actions**, then merge or push the workflow to `main` to deploy.
