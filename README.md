@@ -21,7 +21,21 @@ npm run dev
 npm run package:win
 ```
 
-This emits both an NSIS installer and a portable Windows executable under `release/`. Building Windows artifacts is best done on Windows (or a CI runner with Windows packaging support). This checkout's Linux environment can build the renderer but could not download Electron/native package binaries because its upstream binary TLS connection was rejected.
+This emits `Luma-Setup-<version>-x64.exe` (the NSIS installer) and `Luma-Portable-<version>-x64.exe` (the portable app) under `release/`. Building Windows artifacts is best done on Windows (or a CI runner with Windows packaging support). This checkout's Linux environment can build the renderer but could not download Electron/native package binaries because its upstream binary TLS connection was rejected.
+
+## If `npm run dev` says Electron failed to install
+
+This happens when `node_modules` was copied from an environment where Electron's post-install binary download was skipped. Stop Vite, then run this in PowerShell from the project folder:
+
+```powershell
+Remove-Item -Recurse -Force .\node_modules
+Remove-Item -Force .\package-lock.json
+Remove-Item Env:ELECTRON_SKIP_BINARY_DOWNLOAD -ErrorAction SilentlyContinue
+npm install --foreground-scripts
+npm run dev
+```
+
+A normal fresh clone plus `npm install` does not need this repair.
 
 ## Behavior and privacy
 

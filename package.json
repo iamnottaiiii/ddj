@@ -35,13 +35,18 @@
       "icon": "build/icon.ico"
     },
     "nsis": {
+      "artifactName": "${productName}-Setup-${version}-${arch}.${ext}",
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "Luma"
     },
-    "npmRebuild": false
+    "npmRebuild": false,
+    "portable": {
+      "artifactName": "${productName}-Portable-${version}-${arch}.${ext}",
+      "requestExecutionLevel": "asInvoker"
+    }
   },
   "dependencies": {
     "@xenova/transformers": "^2.17.2"

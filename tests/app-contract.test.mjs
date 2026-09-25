@@ -6,6 +6,8 @@ test('desktop package is configured for a portable executable and installer', ()
   const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
   assert.deepEqual(pkg.build.win.target, ['nsis', 'portable']);
   assert.match(pkg.scripts['package:win'], /electron-builder --win nsis portable/);
+  assert.match(pkg.build.nsis.artifactName, /Setup/);
+  assert.match(pkg.build.portable.artifactName, /Portable/);
 });
 
 test('renderer keeps the model local and does not include an external AI API', () => {
