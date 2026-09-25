@@ -16,3 +16,12 @@ test('renderer keeps the model local and does not include an external AI API', (
   assert.match(source, /env\.useBrowserCache = true/);
   assert.doesNotMatch(source, /openai|anthropic|api[_-]?key/i);
 });
+
+
+test('browser agent uses reviewed allowlisted actions and blocks password entry', () => {
+  const source = readFileSync('src/main.ts', 'utf8');
+  assert.match(source, /Browser action plan/);
+  assert.match(source, /Review & run/);
+  assert.match(source, /Luma will not enter passwords/);
+  assert.match(source, /sendInputEvent/);
+});
