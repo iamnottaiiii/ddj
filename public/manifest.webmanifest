@@ -1,0 +1,13 @@
+{
+  "name": "workspace — local productivity",
+  "short_name": "workspace",
+  "description": "Private local-first documents, sheets, slides, notes, tasks, calendar, forms, and boards.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090b0e",
+  "theme_color": "#090b0e",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

@@ -1,0 +1,18 @@
+:root {
+  --black: #090b0e;
+  --panel: #171b1f;
+  --raised: #272d33;
+  --ink: #e9edf0;
+  --muted: #aab2b9;
+  --dim: #77818a;
+  --line: rgba(213,225,232,.12);
+  --line-strong: rgba(213,225,232,.2);
+  --lime: #e6ff57;
+  --danger-soft: #452725;
+  --radius: 18px;
+  --shadow: 0 10px 30px rgba(0,0,0,.28);
+  --font-size: 15px;
+}
+:root[data-density="compact"] { --font-size: 13px; --radius: 14px; }
+:root[data-density="large"] { --font-size: 17px; --radius: 20px; }
+:root[data-contrast="high"] { --line: rgba(255,255,255,.38); --line-strong: rgba(255,255,255,.62); --muted:#d3d9de; --dim:#a9b0b6; --raised:#30373e; }
