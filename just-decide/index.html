@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Just Decide - I Made Something Cool</title>
+<link rel="icon" href="data:,">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #141414;
+    --panel: #1d1d1d;
+    --ink: #f5f1e6;
+    --dim: #a9a49a;
+    --accent: #ff4d00;
+    --line: #f5f1e6;
+  }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Courier New", Courier, monospace;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .strip {
+    overflow: hidden;
+    background: var(--accent);
+    color: #141414;
+    border-bottom: 3px solid var(--line);
+  }
+  .strip div {
+    display: inline-block;
+    white-space: nowrap;
+    padding: 9px 0;
+    font-family: "Arial Black", Impact, sans-serif;
+    font-size: 15px;
+    letter-spacing: .14em;
+    animation: slide 16s linear infinite;
+  }
+  @keyframes slide { to { transform: translateX(-50%); } }
+  .wrap { max-width: 720px; margin: 0 auto; width: 100%; padding: 0 20px; flex: 1; display: flex; flex-direction: column; }
+  header { padding: 44px 0 10px; }
+  .kicker {
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: var(--dim);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: "Arial Black", Impact, sans-serif;
+    font-size: clamp(58px, 13vw, 118px);
+    line-height: .9;
+    letter-spacing: -.01em;
+    text-transform: uppercase;
+  }
+  h1 .dot { color: var(--accent); }
+  .sub { margin-top: 14px; font-size: 16px; line-height: 1.6; color: var(--dim); }
+  main { flex: 1; width: 100%; padding: 30px 0 10px; }
+  .box {
+    border: 3px solid var(--line);
+    background: var(--panel);
+    padding: 22px;
+  }
+  label {
+    display: block;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--dim);
+    margin-bottom: 12px;
+  }
+  textarea {
+    width: 100%;
+    min-height: 96px;
+    background: #101010;
+    color: var(--ink);
+    border: 3px solid var(--line);
+    font-family: "Courier New", Courier, monospace;
+    font-size: 18px;
+    line-height: 1.5;
+    padding: 14px;
+    resize: vertical;
+  }
+  textarea:focus { outline: 3px solid var(--accent); outline-offset: 2px; }
+  #decide {
+    display: block;
+    width: 100%;
+    margin-top: 18px;
+    font-family: "Arial Black", Impact, sans-serif;
+    font-size: clamp(26px, 6vw, 40px);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: #141414;
+    border: 3px solid var(--line);
+    padding: 18px 10px 16px;
+    cursor: pointer;
+    box-shadow: 6px 6px 0 var(--line);
+  }
+  #decide:active { transform: translate(4px, 4px); box-shadow: 2px 2px 0 var(--line); }
+  #decide:disabled { opacity: .6; cursor: default; }
+  .err {
+    display: none;
+    margin-top: 14px;
+    border: 3px solid var(--accent);
+    color: var(--accent);
+    font-size: 15px;
+    padding: 12px 14px;
+  }
+  .err.show { display: block; }
+  #verdict { display: none; margin-top: 26px; border: 3px solid var(--line); background: var(--panel); padding: 26px 22px 24px; text-align: center; }
+  #verdict.show { display: block; }
+  #verdict .q {
+    font-size: 14px;
+    color: var(--dim);
+    line-height: 1.6;
+    margin-bottom: 18px;
+    overflow-wrap: anywhere;
+  }
+  #verdict .word {
+    font-family: "Arial Black", Impact, sans-serif;
+    font-size: clamp(110px, 28vw, 220px);
+    line-height: 1;
+    text-transform: uppercase;
+    animation: pop .22s ease-out;
+  }
+  #verdict .word.yes { color: var(--accent); }
+  #verdict .word.no { color: var(--ink); }
+  @keyframes pop { from { transform: scale(.82); } to { transform: scale(1); } }
+  #verdict .why {
+    margin: 20px auto 0;
+    max-width: 520px;
+    border: 3px solid var(--line);
+    background: #101010;
+    padding: 16px 18px;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  .again-row { display: flex; gap: 14px; margin-top: 20px; }
+  .again-row button {
+    flex: 1;
+    font-family: "Arial Black", Impact, sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    padding: 14px 8px 12px;
+    cursor: pointer;
+    border: 3px solid var(--line);
+    box-shadow: 4px 4px 0 var(--line);
+  }
+  .again-row button:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--line); }
+  #reroll { background: var(--accent); color: #141414; }
+  #reset { background: transparent; color: var(--ink); }
+  footer { text-align: center; padding: 52px 0 40px; margin-top: auto; }
+  footer a { font-size: 14px; color: var(--dim); }
+  footer a:hover { color: var(--ink); }
+  .hidden { display: none !important; }
+  @media (prefers-reduced-motion: reduce) {
+    .strip div { animation: none; }
+    #verdict .word { animation: none; }
+  }
+</style>
+</head>
+<body>
+<div class="strip" aria-hidden="true"><div>STOP OVERTHINKING&nbsp;&nbsp;//&nbsp;&nbsp;STOP OVERTHINKING&nbsp;&nbsp;//&nbsp;&nbsp;STOP OVERTHINKING&nbsp;&nbsp;//&nbsp;&nbsp;STOP OVERTHINKING&nbsp;&nbsp;//&nbsp;&nbsp;STOP OVERTHINKING&nbsp;&nbsp;//&nbsp;&nbsp;STOP OVERTHINKING&nbsp;&nbsp;//&nbsp;&nbsp;</div></div>
+<div class="wrap">
+  <header>
+    <div class="kicker">I MADE SOMETHING COOL</div>
+    <h1>Just<br>Decide<span class="dot">.</span></h1>
+    <p class="sub">Stuck between yes and no? Type the dilemma, hit the button, get a blunt answer. Done deliberating.</p>
+  </header>
+  <main>
+    <div class="box" id="ask">
+      <label for="dilemma">WHAT ARE WE DECIDING?</label>
+      <textarea id="dilemma" maxlength="140" placeholder="Type your dilemma. Yes or no stuff only."></textarea>
+      <button id="decide">Decide</button>
+      <div id="err" class="err" role="alert"></div>
+    </div>
+
+    <div id="verdict" aria-live="polite">
+      <p class="q" id="vq"></p>
+      <div class="word" id="vw"></div>
+      <p class="why" id="vl"></p>
+      <div class="again-row">
+        <button id="reroll">Hit it again</button>
+        <button id="reset">New dilemma</button>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <a href="/projects/">Back to the project shelf</a>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var YES = [
+    "You already knew. You just wanted permission. Granted.",
+    "Do it before you talk yourself out of it.",
+    "Yes. Future you is already grateful.",
+    "Obviously yes. Next question.",
+    "Yes. The worst case is a good story.",
+    "Do it. Waiting is just fear killing time.",
+    "Yes. You would not have asked if you meant no.",
+    "Do it now. Your gut decided an hour ago.",
+    "Yes. Fortune favors the decisive.",
+    "Absolutely. Stop polling the group chat."
+  ];
+  var NO = [
+    "No. You knew that before you typed it.",
+    "No. Sleep on it and thank me later.",
+    "Nope. That idea needs more time in the oven.",
+    "No. Your face while asking said it all.",
+    "Hard no. Walk away.",
+    "No. Not today, not like this.",
+    "Nope. Even the question sounds tired.",
+    "No. Trust the hesitation this once.",
+    "No. You want an excuse, not an answer.",
+    "Absolutely not. Moving on."
+  ];
+
+  var dilemma = document.getElementById('dilemma');
+  var decideBtn = document.getElementById('decide');
+  var err = document.getElementById('err');
+  var ask = document.getElementById('ask');
+  var verdict = document.getElementById('verdict');
+  var vq = document.getElementById('vq');
+  var vw = document.getElementById('vw');
+  var vl = document.getElementById('vl');
+  var reroll = document.getElementById('reroll');
+  var reset = document.getElementById('reset');
+  var lastLine = -1;
+
+  function pickLine(pool) {
+    var i;
+    do { i = Math.floor(Math.random() * pool.length); } while (pool.length > 1 && i === lastLine);
+    lastLine = i;
+    return pool[i];
+  }
+
+  function showErr(msg) {
+    err.textContent = msg;
+    err.classList.add('show');
+  }
+  function hideErr() { err.classList.remove('show'); }
+
+  function roll() {
+    var text = dilemma.value.trim();
+    if (!text) { showErr("Give me something to decide first."); dilemma.focus(); return; }
+    hideErr();
+    decideBtn.disabled = true;
+    var dots = 0;
+    decideBtn.textContent = "Deciding";
+    var t = setInterval(function () {
+      dots = (dots + 1) % 4;
+      decideBtn.textContent = "Deciding" + ".".repeat(dots);
+    }, 220);
+    setTimeout(function () {
+      clearInterval(t);
+      decideBtn.disabled = false;
+      decideBtn.textContent = "Decide";
+      var yes = Math.random() < 0.5;
+      vq.textContent = "\u201C" + text + "\u201D";
+      vw.textContent = yes ? "Yes" : "No";
+      vw.className = "word " + (yes ? "yes" : "no");
+      vl.textContent = pickLine(yes ? YES : NO);
+      ask.classList.add('hidden');
+      verdict.classList.remove('show');
+      void verdict.offsetWidth;
+      verdict.classList.add('show');
+      verdict.scrollIntoView({ block: "nearest" });
+    }, 800);
+  }
+
+  decideBtn.addEventListener('click', roll);
+  dilemma.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); roll(); }
+  });
+  reroll.addEventListener('click', function () {
+    var text = dilemma.value.trim();
+    var yes = Math.random() < 0.5;
+    vq.textContent = "\u201C" + text + "\u201D";
+    vw.textContent = yes ? "Yes" : "No";
+    vw.className = "word " + (yes ? "yes" : "no");
+    vl.textContent = pickLine(yes ? YES : NO);
+    verdict.classList.remove('show');
+    void verdict.offsetWidth;
+    verdict.classList.add('show');
+  });
+  reset.addEventListener('click', function () {
+    dilemma.value = "";
+    hideErr();
+    verdict.classList.remove('show');
+    ask.classList.remove('hidden');
+    dilemma.focus();
+  });
+})();
+</script>
+</body>
+</html>
