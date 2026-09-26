@@ -253,6 +253,25 @@
     .visual.alt::before { background: var(--blue); }
     .visual.alt::after { background: var(--blue); border-radius: 6px; }
 
+    .visual.alt2 { background: var(--coral); }
+    .visual.alt2::before { background: var(--yellow); }
+    .visual.alt2::after { background: var(--blue); border-radius: 6px; }
+
+    .verdict-stamp {
+      position: relative;
+      z-index: 1;
+      padding: 18px 30px 14px;
+      background: #fffdf5;
+      color: #171713;
+      border: 4px solid #171713;
+      box-shadow: 8px 8px 0 #171713;
+      transform: rotate(-6deg);
+      font-family: "Courier New", monospace;
+      font-weight: 700;
+      font-size: clamp(44px, 6vw, 72px);
+      letter-spacing: -.02em;
+    }
+
     .thought-bubble {
       position: relative;
       z-index: 1;
@@ -478,7 +497,7 @@
 
     <section class="intro" aria-labelledby="page-title">
       <h1 id="page-title">The project <em>shelf.</em></h1>
-      <p class="count">2 things in the wild</p>
+      <p class="count">3 things in the wild</p>
     </section>
 
     <a class="project" href="../excuse-generator/" aria-label="Open the Excuse Generator">
@@ -514,6 +533,21 @@
           <p class="description">One honest thought per phone, per day. Drop yours to unlock the stream and read what everyone else is thinking. No names, no replies.</p>
         </div>
         <span class="open">Drop today's thought <b aria-hidden="true">↗</b></span>
+      </div>
+    </a>
+
+    <a class="project" href="../just-decide/" aria-label="Open Just Decide">
+      <div class="visual alt2" aria-hidden="true">
+        <div class="verdict-stamp">YES.</div>
+      </div>
+
+      <div class="project-copy">
+        <div>
+          <span class="number">PROJECT 003</span>
+          <h2>Just Decide</h2>
+          <p class="description">Stuck between yes and no? Type the dilemma, hit the button, and get a blunt answer with the reason. No more spiraling.</p>
+        </div>
+        <span class="open">Get a verdict <b aria-hidden="true">↗</b></span>
       </div>
     </a>
 
