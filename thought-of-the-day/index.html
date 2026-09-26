@@ -11,9 +11,12 @@
     color: #1c1a17;
     font-family: Georgia, 'Times New Roman', serif;
     min-height: 100vh;
-    padding: 24px 16px 60px;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 16px 0;
   }
-  .wrap { max-width: 620px; margin: 0 auto; }
+  .wrap { max-width: 620px; margin: 0 auto; width: 100%; flex: 1; display: flex; flex-direction: column; }
+  main { flex: 1; width: 100%; }
   header { text-align: center; margin: 28px 0 8px; }
   header .kicker {
     font-family: -apple-system, 'Segoe UI', sans-serif;
@@ -92,7 +95,7 @@
     font-size: 15px; line-height: 1.55;
   }
   .done-note strong { color: #b3402a; }
-  footer { text-align: center; margin-top: 44px; }
+  footer { text-align: center; margin-top: auto; padding: 48px 0 36px; }
   footer a { color: #b3402a; font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 14px; }
   footer p { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 12px; color: #a39a86; margin-top: 10px; line-height: 1.6; }
   .hidden { display: none !important; }
@@ -100,10 +103,11 @@
 </head>
 <body>
 <div class="wrap">
+  <main>
   <header>
     <div class="kicker">I made something cool</div>
     <h1>Thought of the Day</h1>
-    <p class="sub">One thought per phone, per day.<br>Drop yours to unlock everyone else's.</p>
+    <p class="sub">What's your thought of the day?</p>
   </header>
   <hr class="rule">
 
@@ -128,10 +132,11 @@
   </div>
 
   <div id="boot" class="loading">Waking up the thought stream...</div>
+  </main>
 
   <footer>
     <a href="../projects/">Back to the project shelf</a>
-    <p>Anonymous. One thought per phone per day.<br>Thoughts are public to anyone reading the stream.</p>
+    <p>Anonymous. One a day.<br>Thoughts are public to anyone reading the stream.</p>
   </footer>
 </div>
 
