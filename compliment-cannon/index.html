@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compliment Cannon - I Made Something Cool</title>
+<link rel="icon" href="data:,">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --plum: #241533;
+    --plum-deep: #1a0f26;
+    --pink: #ff5da2;
+    --lime: #c8f542;
+    --cream: #fff7ea;
+    --dim: #b9a6cf;
+  }
+  body {
+    background: radial-gradient(circle at 50% -10%, #3a2250 0%, var(--plum) 45%, var(--plum-deep) 100%);
+    color: var(--cream);
+    font-family: "Trebuchet MS", "Arial Rounded MT Bold", Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+  #confetti {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+  }
+  .wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 22px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  header { padding: 56px 0 8px; text-align: center; }
+  .kicker {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 5px;
+    color: var(--plum-deep);
+    background: var(--lime);
+    padding: 7px 14px 6px;
+    border-radius: 999px;
+    font-weight: bold;
+    margin-bottom: 22px;
+    transform: rotate(-2deg);
+  }
+  h1 {
+    font-size: clamp(52px, 12vw, 96px);
+    line-height: .95;
+    font-weight: 900;
+    letter-spacing: -.01em;
+  }
+  h1 .pink { color: var(--pink); }
+  h1 .lime { color: var(--lime); }
+  .sub {
+    margin-top: 16px;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--dim);
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  main { flex: 1; width: 100%; padding: 26px 0 10px; display: flex; flex-direction: column; align-items: center; }
+  .cannon-zone {
+    width: 100%;
+    border: 3px dashed var(--pink);
+    border-radius: 28px;
+    padding: 30px 20px 26px;
+    text-align: center;
+    background: rgba(255, 93, 162, 0.06);
+    position: relative;
+  }
+  .cannon {
+    font-size: 64px;
+    line-height: 1;
+    display: block;
+    margin-bottom: 6px;
+    filter: drop-shadow(0 6px 0 rgba(0,0,0,.35));
+  }
+  .cannon.loaded {
+    animation: wiggle .5s ease-in-out infinite;
+  }
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(-4deg) scale(1); }
+    50% { transform: rotate(4deg) scale(1.06); }
+  }
+  #fire {
+    display: block;
+    width: 100%;
+    margin-top: 18px;
+    font-family: inherit;
+    font-weight: 900;
+    font-size: clamp(26px, 6vw, 38px);
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    background: var(--pink);
+    color: var(--plum-deep);
+    border: none;
+    border-radius: 22px;
+    padding: 20px 10px 18px;
+    cursor: pointer;
+    box-shadow: 0 8px 0 #b83671, 0 14px 24px rgba(0,0,0,.4);
+    transition: transform .06s ease, box-shadow .06s ease;
+  }
+  #fire:active { transform: translateY(6px); box-shadow: 0 2px 0 #b83671, 0 6px 12px rgba(0,0,0,.4); }
+  #fire:disabled { opacity: .55; cursor: default; }
+  #compliment-box {
+    display: none;
+    margin-top: 24px;
+    width: 100%;
+  }
+  #compliment-box.show { display: block; }
+  .card {
+    background: var(--cream);
+    color: var(--plum-deep);
+    border-radius: 24px;
+    padding: 34px 28px 30px;
+    text-align: center;
+    transform: rotate(-1deg);
+    box-shadow: 0 12px 0 rgba(0,0,0,.25);
+  }
+  .card .label {
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: var(--pink);
+    font-weight: bold;
+    margin-bottom: 14px;
+  }
+  .card .text {
+    font-size: clamp(22px, 5.4vw, 30px);
+    line-height: 1.35;
+    font-weight: bold;
+  }
+  .card .again {
+    margin-top: 22px;
+    font-family: inherit;
+    font-weight: 900;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    background: var(--lime);
+    color: var(--plum-deep);
+    border: none;
+    border-radius: 16px;
+    padding: 15px 28px 13px;
+    cursor: pointer;
+    box-shadow: 0 5px 0 #7fa31f;
+    transition: transform .06s ease, box-shadow .06s ease;
+  }
+  .card .again:active { transform: translateY(4px); box-shadow: 0 1px 0 #7fa31f; }
+  .counter {
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--dim);
+    letter-spacing: 1px;
+  }
+  .counter b { color: var(--lime); }
+  footer { text-align: center; padding: 48px 0 40px; margin-top: auto; }
+  footer a { font-size: 14px; color: var(--dim); }
+  footer a:hover { color: var(--cream); }
+  @media (prefers-reduced-motion: reduce) {
+    .cannon.loaded { animation: none; }
+  }
+</style>
+</head>
+<body>
+<canvas id="confetti"></canvas>
+<div class="wrap">
+  <header>
+    <span class="kicker">I MADE SOMETHING COOL</span>
+    <h1>Compliment<br><span class="pink">Cann</span><span class="lime">on.</span></h1>
+    <p class="sub">Rough day? Load the cannon, fire it, and catch a fresh compliment right in the face. Unlimited ammo, zero recoil.</p>
+  </header>
+  <main>
+    <div class="cannon-zone">
+      <span class="cannon" id="cannon" aria-hidden="true">✦</span>
+      <button id="fire">Fire the cannon</button>
+    </div>
+
+    <div id="compliment-box" aria-live="polite">
+      <div class="card">
+        <p class="label">DIRECT HIT</p>
+        <p class="text" id="compliment"></p>
+        <button class="again" id="again">Fire again</button>
+      </div>
+      <p class="counter"><b id="shots">0</b> compliments fired so far</p>
+    </div>
+  </main>
+  <footer>
+    <a href="/projects/">Back to the project shelf</a>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var COMPLIMENTS = [
+    "You have the exact energy people try to bottle.",
+    "Someone out there is better just because you exist.",
+    "Your laugh could fix a Monday.",
+    "You make ordinary rooms feel better.",
+    "You are the person group chats warn about, in a good way.",
+    "Your brain is doing great things. Keep letting it.",
+    "You look like someone who always finds the good parking spot.",
+    "People trust you, and they are right to.",
+    "You have main-character posture and you know it.",
+    "Your taste is elite and your playlist proves it.",
+    "You are the plot twist everyone roots for.",
+    "Even your resting face has great intentions.",
+    "You would survive a group project. Respect.",
+    "Your future self is already bragging about you.",
+    "You give off warm blanket energy.",
+    "Somewhere, someone describes you as their favorite person.",
+    "You handle chaos better than most people handle quiet.",
+    "Your kindness has a longer range than you think.",
+    "You are the good part of someone's day. Probably today's.",
+    "If confidence were currency, you would be rich."
+  ];
+
+  var fire = document.getElementById('fire');
+  var again = document.getElementById('again');
+  var box = document.getElementById('compliment-box');
+  var text = document.getElementById('compliment');
+  var cannon = document.getElementById('cannon');
+  var shotsEl = document.getElementById('shots');
+  var canvas = document.getElementById('confetti');
+  var ctx = canvas.getContext('2d');
+  var last = -1;
+  var shots = 0;
+  var parts = [];
+  var raf = null;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var COLORS = ['#ff5da2', '#c8f542', '#fff7ea', '#ffd166', '#7dd0ff', '#ff8c42'];
+
+  function sizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  sizeCanvas();
+  window.addEventListener('resize', sizeCanvas);
+
+  function pick() {
+    var i;
+    do { i = Math.floor(Math.random() * COMPLIMENTS.length); } while (COMPLIMENTS.length > 1 && i === last);
+    last = i;
+    return COMPLIMENTS[i];
+  }
+
+  function boom() {
+    if (reduceMotion) return;
+    var x = canvas.width / 2, y = canvas.height * 0.32;
+    for (var i = 0; i < 160; i++) {
+      var a = Math.random() * Math.PI * 2;
+      var sp = 4 + Math.random() * 11;
+      parts.push({
+        x: x, y: y,
+        vx: Math.cos(a) * sp,
+        vy: Math.sin(a) * sp - 6,
+        w: 6 + Math.random() * 8,
+        h: 4 + Math.random() * 5,
+        r: Math.random() * Math.PI * 2,
+        vr: (Math.random() - 0.5) * 0.4,
+        c: COLORS[Math.floor(Math.random() * COLORS.length)],
+        life: 90 + Math.random() * 60
+      });
+    }
+    if (!raf) tick();
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    parts = parts.filter(function (p) { return p.life > 0 && p.y < canvas.height + 40; });
+    for (var i = 0; i < parts.length; i++) {
+      var p = parts[i];
+      p.x += p.vx; p.y += p.vy;
+      p.vy += 0.28; p.vx *= 0.985;
+      p.r += p.vr; p.life--;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.r);
+      ctx.globalAlpha = Math.min(1, p.life / 40);
+      ctx.fillStyle = p.c;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    }
+    if (parts.length) { raf = requestAnimationFrame(tick); }
+    else { raf = null; ctx.clearRect(0, 0, canvas.width, canvas.height); }
+  }
+
+  function fireIt() {
+    cannon.classList.add('loaded');
+    fire.disabled = true;
+    fire.textContent = 'Loading...';
+    setTimeout(function () {
+      cannon.classList.remove('loaded');
+      fire.disabled = false;
+      fire.textContent = 'Fire the cannon';
+      text.textContent = pick();
+      shots++;
+      shotsEl.textContent = shots;
+      box.classList.remove('show');
+      void box.offsetWidth;
+      box.classList.add('show');
+      boom();
+      box.scrollIntoView({ block: 'nearest' });
+    }, 450);
+  }
+
+  fire.addEventListener('click', fireIt);
+  again.addEventListener('click', function () {
+    text.textContent = pick();
+    shots++;
+    shotsEl.textContent = shots;
+    box.classList.remove('show');
+    void box.offsetWidth;
+    box.classList.add('show');
+    boom();
+  });
+})();
+</script>
+</body>
+</html>
