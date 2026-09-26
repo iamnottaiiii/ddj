@@ -140,18 +140,8 @@
   </footer>
 </div>
 
-<script type="importmap">
-{
-  "imports": {
-    "@noble/curves/secp256k1.js": "https://cdn.jsdelivr.net/npm/@noble/curves@2.0.1/secp256k1.js",
-    "@noble/hashes/sha2.js": "https://cdn.jsdelivr.net/npm/@noble/hashes@2.0.1/sha2.js",
-    "@noble/hashes/utils.js": "https://cdn.jsdelivr.net/npm/@noble/hashes@2.0.1/utils.js"
-  }
-}
-</script>
 <script type="module">
-import { generateSecretKey, getPublicKey, finalizeEvent } from 'https://cdn.jsdelivr.net/npm/nostr-tools@2.25.2/lib/esm/pure.js';
-import { Relay } from 'https://cdn.jsdelivr.net/npm/nostr-tools@2.25.2/lib/esm/relay.js';
+import { generateSecretKey, getPublicKey, finalizeEvent, Relay } from 'https://cdn.jsdelivr.net/npm/nostr-tools@2.25.2/+esm';
 
 const TAG = 'imsc-thought-of-the-day';
 const RELAYS = ['wss://relay.damus.io', 'wss://nos.lol', 'wss://nostrue.com', 'wss://relay.primal.net'];
