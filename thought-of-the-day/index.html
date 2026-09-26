@@ -126,8 +126,7 @@
     <div id="endcard" class="tcard hidden">
       <p>That's every thought for today. Come back tomorrow.</p>
     </div>
-    <div class="row">
-      <span id="pos" class="count"></span>
+    <div class="row" style="justify-content: flex-end;">
       <button id="next">Next thought</button>
     </div>
   </div>
@@ -224,13 +223,12 @@ async function alreadyPostedToday(pubHex) {
 
 function render(i) {
   pos = i;
-  const card = $('card'), endcard = $('endcard'), next = $('next'), posEl = $('pos');
+  const card = $('card'), endcard = $('endcard'), next = $('next');
   if (i >= deck.length) {
     atEnd = true;
     card.classList.add('hidden');
     endcard.classList.remove('hidden');
     next.classList.add('hidden');
-    posEl.textContent = '';
     return;
   }
   atEnd = false;
@@ -240,7 +238,6 @@ function render(i) {
   next.classList.remove('hidden');
   $('thought-text').textContent = e.content;
   $('thought-time').textContent = new Date(e.created_at * 1000).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-  posEl.textContent = (i + 1) + ' of ' + deck.length;
 }
 
 let deck = [], pos = 0, deckReady = false, atEnd = false, eoseCount = 0, eoseTimer = null, subs = [];
@@ -252,19 +249,17 @@ function showStream() {
   subs = [];
   clearTimeout(eoseTimer);
   deck = []; pos = 0; deckReady = false; atEnd = false; eoseCount = 0;
-  const card = $('card'), endcard = $('endcard'), next = $('next'), posEl = $('pos');
+  const card = $('card'), endcard = $('endcard'), next = $('next');
   if (!conns.length) {
     $('thought-text').textContent = 'Could not reach the thought stream. Check your connection and refresh.';
     $('thought-time').textContent = '';
     card.classList.remove('hidden');
     endcard.classList.add('hidden');
     next.classList.add('hidden');
-    posEl.textContent = '';
     return;
   }
   $('thought-text').textContent = 'Listening for today\u2019s thoughts\u2026';
   $('thought-time').textContent = '';
-  posEl.textContent = '';
   card.classList.remove('hidden');
   endcard.classList.add('hidden');
   next.classList.remove('hidden');
