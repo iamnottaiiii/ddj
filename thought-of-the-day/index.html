@@ -35,7 +35,6 @@
     padding: 26px 22px;
     box-shadow: 5px 5px 0 #1c1a17;
   }
-  .gate-note { font-size: 16px; line-height: 1.6; margin-bottom: 18px; color: #4a463c; }
   textarea {
     width: 100%;
     min-height: 110px;
@@ -63,7 +62,6 @@
   }
   button:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #1c1a17; }
   button:disabled { opacity: 0.55; cursor: default; }
-  .netstatus { font-family: Arial, sans-serif; font-size: 12px; color: #8a8578; margin-top: 12px; }
   .err {
     margin-top: 14px;
     border: 2px solid #a33c2a;
@@ -118,13 +116,11 @@
   <hr class="rule">
 
   <div id="gate" class="gate">
-    <p class="gate-note">No names, no replies, no likes. Just one honest thought, and then you get to read everyone else's. That's the whole deal.</p>
     <textarea id="box" maxlength="200" placeholder="Type today's thought..."></textarea>
     <div class="row">
       <span id="n" class="count">0 / 200</span>
       <button id="drop">Drop it</button>
     </div>
-    <div id="netstatus" class="netstatus">connecting to the thought stream&hellip;</div>
     <div id="err" class="err hidden"></div>
   </div>
 
@@ -181,13 +177,6 @@ function getKey() {
     try { localStorage.setItem('totd_sk', hex); } catch (e) {}
   }
   return new Uint8Array(hex.match(/../g).map(h => parseInt(h, 16)));
-}
-
-function setStatus(txt, bad) {
-  const s = $('netstatus');
-  if (!s) return;
-  s.textContent = txt;
-  s.style.color = bad ? '#a33c2a' : '#8a8578';
 }
 
 async function tryConnect() {
@@ -286,18 +275,15 @@ async function onDrop() {
   btn.disabled = true;
   btn.textContent = 'Dropping\u2026';
   if (!conns.length) {
-    setStatus('reconnecting\u2026');
     conns = await tryConnect();
   }
   if (!conns.length) {
     err.textContent = 'Could not reach the thought stream. Check your connection and try again.';
     err.classList.remove('hidden');
-    setStatus('offline \u2014 posting unavailable', true);
     btn.disabled = false;
     btn.textContent = 'Drop it';
     return;
   }
-  setStatus('connected to the thought stream');
   const ev = finalizeEvent(
     { kind: 1, created_at: Math.floor(Date.now() / 1000), tags: [['t', TAG]], content: text.slice(0, 200) },
     keyBytes
@@ -328,11 +314,6 @@ if (postedToday) showStream();
 // ---- background: connect, then settle anything the fast path couldn't
 (async () => {
   conns = await tryConnect();
-  if (conns.length) {
-    setStatus('connected to the thought stream');
-  } else {
-    setStatus('offline \u2014 posting unavailable', true);
-  }
   if (!postedToday && conns.length && keyBytes) {
     let pubHex = null;
     try { pubHex = getPublicKey(keyBytes); } catch (e) {}
