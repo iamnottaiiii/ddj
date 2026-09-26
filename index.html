@@ -174,18 +174,27 @@
       color: var(--muted);
       max-width: 590px;
     }
-    .downmark {
-      width: 72px;
-      height: 72px;
+    .projects-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-width: 220px;
+      min-height: 58px;
+      padding: 0 20px;
+      background: var(--hot);
+      color: var(--hot-ink);
       border: 1px solid var(--ink);
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
+      box-shadow: 4px 4px 0 var(--shadow);
       text-decoration: none;
-      transition: background .18s ease, color .18s ease;
+      font-weight: 800;
+      transition: transform .15s ease, box-shadow .15s ease;
     }
-    .downmark:hover, .downmark:focus-visible { background: var(--ink); color: var(--paper); }
-    .downmark svg { width: 28px; height: 28px; }
+    .projects-link:hover, .projects-link:focus-visible {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--shadow);
+    }
+    .projects-link svg { width: 20px; height: 20px; flex: none; }
 
     .work { padding: clamp(70px, 9vw, 118px) 0; }
     .section-head {
@@ -481,7 +490,7 @@
       .hero { padding-top: 64px; }
       h1 { font-size: clamp(49px, 18vw, 78px); }
       .hero-bottom { grid-template-columns: 1fr; }
-      .downmark { width: 56px; height: 56px; }
+      .projects-link { width: 100%; }
       .brand-name { display: none; }
       .builds-empty { grid-template-columns: 1fr; box-shadow: 5px 5px 0 var(--shadow); }
       .workbench { min-height: 330px; border-right: 0; border-bottom: 1px solid var(--ink); padding: 34px 22px 42px; }
@@ -522,97 +531,22 @@
         <span class="brand-name">I Made Something Cool</span>
       </a>
       <span class="edition">Useful things, made properly</span>
-      <a href="#builds">The workbench</a>
     </div>
 
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="build-tag">Independent digital workshop</p>
           <h1 id="hero-title">Make it useful.<br />Make it <span class="scribble">cool.</span></h1>
         </div>
         <div class="hero-bottom">
           <p>Small digital things built around real habits, real annoyances, and ideas people would actually use.</p>
-          <a class="downmark" href="#builds" aria-label="Jump to the workbench">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v15M6.5 13.5 12 19l5.5-5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a class="projects-link" href="projects/">
+            <span>See the projects</span>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13.5 6.5 19 12l-5.5 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </div>
       </section>
 
-      <section class="work" id="builds" aria-labelledby="builds-title">
-        <div class="section-head">
-          <h2 id="builds-title">On the workbench</h2>
-          <span>Starting from scratch</span>
-        </div>
-
-        <article class="project">
-          <div class="project-visual" aria-hidden="true">
-            <div class="browser">
-              <div class="browser-bar">
-                <span class="browser-dot"></span>
-                <span class="browser-dot"></span>
-                <span class="browser-dot"></span>
-              </div>
-              <div class="mini-app">
-                <p class="mini-kicker">A way out, in one tap</p>
-                <p class="mini-title">What are you trying to get out of?</p>
-                <div class="mini-controls">
-                  <div class="mini-label">The situation</div>
-                  <div class="mini-select">Plans I already said yes to</div>
-                  <span class="mini-button">Make me an excuse</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="project-copy">
-            <div>
-              <div class="project-number">
-                <span>Build 001</span>
-                <span>Useful mischief</span>
-              </div>
-              <h3>Excuse Generator</h3>
-              <p>Pick what you’re dodging and get a believable excuse in a tap. For the days when “I can’t make it” needs a little help.</p>
-            </div>
-            <a class="launch" href="excuse-generator/">
-              <span>Open Excuse Generator</span>
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13.5 6.5 19 12l-5.5 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-        </article>
-
-        <div class="builds-empty coming-soon">
-          <div class="workbench" aria-hidden="true">
-            <div class="note-card">
-              <span>Next on the bench</span>
-              <p>Would I keep this on my own phone?</p>
-            </div>
-          </div>
-          <div class="builds-copy">
-            <span class="count">The workshop stays open</span>
-            <div>
-              <h3>More coming soon.</h3>
-              <p>No filler projects. No made-up problems. Each release has to be simple, useful, and good enough to share with a friend.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="principles" aria-labelledby="principles-title">
-        <div class="section-head">
-          <h2 id="principles-title">The standard</h2>
-          <span>Three checks</span>
-        </div>
-        <ul class="criteria">
-          <li class="criterion"><b>It starts with real life.</b><span>A familiar problem or habit, not a feature looking for a reason to exist.</span></li>
-          <li class="criterion"><b>It earns its place.</b><span>Useful more than once, easy to understand, and quick to come back to.</span></li>
-          <li class="criterion"><b>It feels made by a person.</b><span>Clear writing, thoughtful details, and no unnecessary polish hiding a weak idea.</span></li>
-        </ul>
-      </section>
-
-      <section class="statement" aria-label="What this workshop is about">
-        <div class="statement-label">The rule</div>
-        <blockquote>Build something a person can use, then make it <em>worth remembering.</em></blockquote>
-      </section>
     </main>
 
     <footer>
