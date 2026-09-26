@@ -5,56 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="color-scheme" content="light dark" />
   <link rel="icon" href="data:," />
-  <title>Excuse Generator</title>
+  <title>Need an Out?</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap');
 
     :root {
       color-scheme: light dark;
-      --ink: #17211d;
-      --muted: #59635e;
-      --paper: #f7f4ec;
-      --surface: #fffcf5;
-      --desk: #dce6de;
-      --line: #c6d0c8;
-      --accent: #d94f36;
-      --accent-dark: #a93523;
-      --green: #1e6b4f;
-      --soft-green: #dcece4;
-      --shadow: rgba(30, 52, 41, .17);
-      --focus: #126f9b;
+      --bg: #a9d7ff;
+      --bg-deep: #76b8ee;
+      --ink: #12233c;
+      --muted: #52647c;
+      --card: #fffdf8;
+      --card-soft: #f4f2eb;
+      --line: #cbd1d6;
+      --orange: #ff633b;
+      --orange-deep: #c93416;
+      --yellow: #ffd65a;
+      --lime: #cbef8e;
+      --selected: #dff2ff;
+      --shadow: rgba(18, 35, 60, .2);
+      --focus: #0b5489;
     }
     @media (prefers-color-scheme: dark) {
       :root {
-        --ink: #f1eee5;
-        --muted: #b4beb7;
-        --paper: #252822;
-        --surface: #30332c;
-        --desk: #141a17;
-        --line: #454c45;
-        --accent: #f0785e;
-        --accent-dark: #ff9a84;
-        --green: #83c9ab;
-        --soft-green: #293f35;
-        --shadow: rgba(0, 0, 0, .36);
-        --focus: #76c8ee;
+        --bg: #16324d;
+        --bg-deep: #0e2438;
+        --ink: #f9f4e9;
+        --muted: #b5c2d1;
+        --card: #202b38;
+        --card-soft: #18232f;
+        --line: #445264;
+        --orange: #ff7654;
+        --orange-deep: #f04e2a;
+        --yellow: #f2c952;
+        --lime: #a8d46b;
+        --selected: #183f59;
+        --shadow: rgba(0, 0, 0, .35);
+        --focus: #86d2ff;
       }
     }
 
     * { box-sizing: border-box; }
-    html { min-height: 100%; background: var(--desk); }
+    html { min-height: 100%; background: var(--bg); }
     body {
       margin: 0;
       min-height: 100vh;
       color: var(--ink);
       background:
-        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px),
-        var(--desk);
-      background-size: 24px 24px;
-      font-family: Manrope, sans-serif;
+        radial-gradient(circle at 12% 4%, color-mix(in srgb, white 34%, transparent) 0 8%, transparent 25%),
+        linear-gradient(150deg, var(--bg) 0%, var(--bg-deep) 100%);
+      font-family: "DM Sans", sans-serif;
       font-size: 16px;
-      line-height: 1.5;
+      line-height: 1.45;
       -webkit-font-smoothing: antialiased;
     }
     button, select, input { font: inherit; }
@@ -62,87 +64,120 @@
     :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 
     main {
-      width: min(1080px, calc(100% - 32px));
+      width: min(1100px, calc(100% - 36px));
       margin: 0 auto;
-      padding: clamp(32px, 7vw, 78px) 0 56px;
+      padding: clamp(28px, 6vw, 68px) 0 46px;
     }
     .intro {
-      max-width: 720px;
-      margin-bottom: clamp(28px, 5vw, 54px);
+      display: grid;
+      grid-template-columns: minmax(0, 690px) auto;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: clamp(24px, 4vw, 40px);
     }
-    .eyebrow {
-      margin: 0 0 10px;
-      font: 500 .76rem/1.2 "DM Mono", monospace;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--accent-dark);
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      margin: 0 0 13px;
+      padding: 7px 11px;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: var(--yellow);
+      color: #30250a;
+      box-shadow: 3px 3px 0 var(--ink);
+      font: 500 .72rem/1 "DM Mono", monospace;
+      letter-spacing: .04em;
+      transform: rotate(-1.5deg);
     }
     h1 {
       margin: 0;
       max-width: 680px;
-      font-size: clamp(2.15rem, 6vw, 4.85rem);
-      line-height: .98;
-      letter-spacing: -.055em;
+      font-size: clamp(2.5rem, 7vw, 5.7rem);
+      line-height: .91;
+      letter-spacing: -.065em;
       font-weight: 700;
     }
     .lede {
-      max-width: 610px;
-      margin: 18px 0 0;
-      color: var(--muted);
-      font-size: clamp(1rem, 2vw, 1.18rem);
+      max-width: 580px;
+      margin: 20px 0 0;
+      color: var(--ink);
+      font-size: clamp(1.02rem, 2vw, 1.22rem);
+      font-weight: 500;
+    }
+    .tiny-note {
+      justify-self: end;
+      max-width: 180px;
+      margin: 0 6px 7px 0;
+      padding: 13px 15px;
+      border: 2px solid var(--ink);
+      background: var(--lime);
+      color: #183012;
+      box-shadow: 5px 5px 0 var(--ink);
+      font-size: .88rem;
+      font-weight: 700;
+      line-height: 1.25;
+      transform: rotate(2.5deg);
     }
 
     .workspace {
       display: grid;
-      grid-template-columns: minmax(280px, .82fr) minmax(380px, 1.18fr);
-      gap: clamp(22px, 4vw, 48px);
-      align-items: start;
+      grid-template-columns: minmax(285px, .78fr) minmax(390px, 1.22fr);
+      gap: clamp(18px, 3vw, 34px);
+      align-items: stretch;
+    }
+    .controls,
+    .result-card {
+      border: 2px solid var(--ink);
+      background: var(--card);
+      box-shadow: 8px 8px 0 var(--ink);
     }
     .controls {
-      background: color-mix(in srgb, var(--surface) 84%, transparent);
-      border: 1px solid var(--line);
-      box-shadow: 0 12px 34px var(--shadow);
-      padding: clamp(20px, 3vw, 30px);
-      border-radius: 6px 6px 18px 6px;
+      padding: clamp(20px, 3vw, 29px);
+      border-radius: 18px 5px 18px 18px;
     }
-    .step { margin: 0 0 25px; }
-    .step:last-of-type { margin-bottom: 30px; }
+    .controls-title {
+      margin: 0 0 23px;
+      font-size: 1.16rem;
+      letter-spacing: -.02em;
+    }
+    .step { margin: 0 0 22px; }
+    .step:last-of-type { margin-bottom: 27px; }
     .label {
       display: block;
       margin-bottom: 9px;
       font-weight: 700;
-      font-size: .94rem;
+      font-size: .9rem;
     }
     .number {
       display: inline-grid;
       place-items: center;
-      width: 24px;
-      height: 24px;
-      margin-right: 8px;
-      border: 1px solid var(--ink);
+      width: 22px;
+      height: 22px;
+      margin-right: 7px;
       border-radius: 50%;
-      font: 500 .72rem/1 "DM Mono", monospace;
+      background: var(--ink);
+      color: var(--card);
+      font: 500 .69rem/1 "DM Mono", monospace;
       vertical-align: 1px;
     }
     select {
       width: 100%;
       min-height: 48px;
       padding: 0 42px 0 13px;
-      border: 1px solid var(--line);
-      border-radius: 5px;
+      border: 1.5px solid var(--line);
+      border-radius: 9px;
       color: var(--ink);
-      background: var(--paper);
+      background: var(--card-soft);
+      cursor: pointer;
     }
     .chips {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 7px;
     }
-    .chip {
-      position: relative;
-      display: block;
-      cursor: pointer;
-    }
+    .chip { position: relative; display: block; cursor: pointer; }
     .chip input {
       position: absolute;
       inset: 0;
@@ -156,416 +191,908 @@
     .chip span {
       display: grid;
       place-items: center;
-      min-height: 43px;
-      padding: 6px 8px;
-      border: 1px solid var(--line);
-      border-radius: 5px;
-      background: var(--paper);
+      min-height: 44px;
+      padding: 6px;
+      border: 1.5px solid var(--line);
+      border-radius: 9px;
+      background: var(--card-soft);
       color: var(--muted);
-      cursor: pointer;
-      font-size: .86rem;
-      font-weight: 600;
+      font-size: .82rem;
+      font-weight: 700;
       text-align: center;
-      transition: border-color .16s, background .16s, color .16s;
+      transition: background .15s, color .15s, border-color .15s, transform .15s;
     }
     .chip input:checked + span {
-      background: var(--soft-green);
-      color: var(--green);
-      border-color: var(--green);
+      background: var(--selected);
+      color: var(--ink);
+      border-color: var(--ink);
+      transform: translateY(-2px);
     }
     .chip input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 3px; }
     .generate {
       width: 100%;
-      min-height: 52px;
-      border: 0;
-      border-radius: 5px;
-      color: #fff9f1;
-      background: var(--accent);
-      box-shadow: 0 5px 0 var(--accent-dark);
+      min-height: 53px;
+      border: 2px solid var(--ink);
+      border-radius: 10px;
+      color: #fff;
+      background: var(--orange);
+      box-shadow: 4px 4px 0 var(--ink);
       cursor: pointer;
       font-weight: 700;
-      letter-spacing: -.01em;
       transition: transform .1s, box-shadow .1s;
     }
-    .generate:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--accent-dark); }
+    .generate:hover { background: var(--orange-deep); }
+    .generate:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--ink); }
 
-    .result-wrap { position: relative; padding: 10px 0 0 10px; }
-    .result-wrap::before {
-      content: "";
-      position: absolute;
-      inset: 0 10px 10px 0;
-      border: 2px solid var(--ink);
-      border-radius: 4px;
-      opacity: .18;
-      transform: rotate(-1.4deg);
-    }
-    .note {
+    .result-card {
       position: relative;
-      min-height: 420px;
-      padding: clamp(27px, 5vw, 54px);
-      border: 1px solid var(--line);
-      border-radius: 4px;
-      background:
-        repeating-linear-gradient(to bottom, transparent 0, transparent 35px, color-mix(in srgb, var(--line) 54%, transparent) 36px),
-        var(--paper);
-      box-shadow: 0 18px 45px var(--shadow);
-      transform: rotate(.35deg);
+      min-height: 100%;
+      padding: clamp(22px, 4vw, 42px);
+      border-radius: 5px 22px 22px 22px;
       overflow: hidden;
     }
-    .note::after {
+    .result-card::before {
       content: "";
       position: absolute;
-      width: 120px;
-      height: 34px;
-      right: -31px;
-      top: 17px;
-      background: color-mix(in srgb, var(--accent) 25%, transparent);
-      transform: rotate(35deg);
+      width: 140px;
+      height: 140px;
+      right: -70px;
+      top: -70px;
+      border: 28px solid var(--yellow);
+      border-radius: 50%;
     }
-    .note-meta {
+    .result-top {
+      position: relative;
       display: flex;
       justify-content: space-between;
-      gap: 20px;
-      margin-bottom: 42px;
-      font: 500 .72rem/1.3 "DM Mono", monospace;
-      text-transform: uppercase;
-      letter-spacing: .09em;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 9px 18px;
+      padding-right: 36px;
+    }
+    .context {
+      font: 500 .7rem/1.3 "DM Mono", monospace;
+      letter-spacing: .035em;
       color: var(--muted);
     }
-    .excuse {
+    .rating {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      color: #183012;
+      background: var(--lime);
+      font-size: .73rem;
+      font-weight: 700;
+    }
+    .rating::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #3e781d;
+    }
+    .message-label {
+      margin: clamp(32px, 5vw, 50px) 0 10px;
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 700;
+    }
+    .message {
+      position: relative;
       margin: 0;
-      max-width: 620px;
-      font-size: clamp(1.35rem, 3vw, 2rem);
-      line-height: 1.42;
-      letter-spacing: -.025em;
+      max-width: 640px;
+      padding: clamp(21px, 4vw, 32px);
+      border-radius: 24px 24px 7px 24px;
+      background: var(--ink);
+      color: var(--card);
+      font-size: clamp(1.28rem, 3vw, 1.9rem);
+      line-height: 1.38;
+      letter-spacing: -.027em;
       font-weight: 600;
     }
-    .hint {
-      display: flex;
+    .message::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: -9px;
+      border-style: solid;
+      border-width: 10px 0 0 14px;
+      border-color: transparent transparent transparent var(--ink);
+    }
+    .tip {
+      display: grid;
+      grid-template-columns: 25px 1fr;
       gap: 10px;
-      align-items: flex-start;
-      margin: 42px 0 0;
-      padding-top: 17px;
-      border-top: 1px dashed var(--line);
+      align-items: start;
+      margin: clamp(30px, 5vw, 46px) 0 0;
       color: var(--muted);
       font-size: .88rem;
     }
-    .hint svg { width: 18px; flex: 0 0 18px; margin-top: 2px; }
+    .tip-mark {
+      display: grid;
+      place-items: center;
+      width: 25px;
+      height: 25px;
+      border: 1.5px solid var(--ink);
+      border-radius: 50%;
+      color: var(--ink);
+      font-weight: 700;
+    }
     .actions {
       position: relative;
       display: flex;
-      justify-content: flex-end;
       flex-wrap: wrap;
       gap: 9px;
-      margin-top: 16px;
+      margin-top: 28px;
     }
     .action {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      min-height: 42px;
-      padding: 8px 14px;
-      border: 1px solid var(--line);
-      border-radius: 4px;
-      background: var(--surface);
+      justify-content: center;
+      gap: 7px;
+      min-height: 43px;
+      padding: 8px 13px;
+      border: 1.5px solid var(--ink);
+      border-radius: 9px;
+      background: var(--card-soft);
       color: var(--ink);
       cursor: pointer;
-      font-weight: 650;
-      font-size: .88rem;
+      font-size: .85rem;
+      font-weight: 700;
     }
+    .action:first-child { background: var(--yellow); color: #30250a; }
+    .action:hover { transform: translateY(-2px); }
     .action svg { width: 16px; height: 16px; }
-    .action:hover { border-color: var(--ink); }
     .toast {
       position: fixed;
       left: 50%;
-      bottom: max(24px, env(safe-area-inset-bottom));
+      bottom: max(22px, env(safe-area-inset-bottom));
       z-index: 10;
-      transform: translate(-50%, 24px);
+      transform: translate(-50%, 20px);
       padding: 10px 15px;
-      border-radius: 4px;
-      color: var(--paper);
-      background: var(--ink);
-      box-shadow: 0 10px 30px var(--shadow);
+      border: 2px solid var(--ink);
+      border-radius: 9px;
+      color: var(--ink);
+      background: var(--yellow);
+      box-shadow: 4px 4px 0 var(--ink);
       opacity: 0;
       pointer-events: none;
       transition: opacity .18s, transform .18s;
       font-size: .86rem;
-      font-weight: 650;
+      font-weight: 700;
     }
     .toast.show { opacity: 1; transform: translate(-50%, 0); }
-    .fineprint {
-      margin: 42px auto 0;
-      max-width: 720px;
-      color: var(--muted);
+    .footer-note {
+      margin: 32px 0 0;
       text-align: center;
-      font-size: .77rem;
+      color: var(--ink);
+      font-size: .78rem;
+      font-weight: 600;
     }
 
-    @media (max-width: 760px) {
-      main { width: min(100% - 24px, 580px); padding-top: 29px; }
-      .workspace { grid-template-columns: 1fr; gap: 25px; }
-      .intro { margin-bottom: 27px; }
-      .lede { margin-top: 13px; }
-      .controls { padding: 19px; }
-      .result-wrap { padding: 7px 0 0 7px; }
-      .note { min-height: 370px; padding: 27px 23px; }
-      .note-meta { margin-bottom: 32px; }
-      .actions { justify-content: stretch; }
-      .action { flex: 1 1 0; justify-content: center; }
-      .fineprint { margin-top: 32px; }
+    @media (max-width: 790px) {
+      main { width: min(100% - 24px, 620px); padding-top: 26px; }
+      .intro { grid-template-columns: 1fr; gap: 12px; }
+      .tiny-note { justify-self: start; margin-left: 8px; }
+      .workspace { grid-template-columns: 1fr; gap: 22px; }
+      .controls, .result-card { box-shadow: 5px 5px 0 var(--ink); }
+      .result-card { min-height: 460px; }
     }
-    @media (max-width: 390px) {
+    @media (max-width: 420px) {
+      main { width: min(100% - 18px, 620px); }
+      .tiny-note { display: none; }
       .chips { grid-template-columns: 1fr; }
       .chip span { min-height: 40px; }
+      .result-card { padding: 20px 17px 23px; }
+      .result-top { padding-right: 22px; }
+      .message { border-radius: 19px 19px 6px 19px; }
       .actions { display: grid; grid-template-columns: 1fr 1fr; }
       .action:first-child { grid-column: 1 / -1; }
     }
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+      *, *::before, *::after { transition: none !important; }
     }
   </style>
 </head>
 <body>
   <main>
     <section class="intro" aria-labelledby="page-heading">
-      <p class="eyebrow">Your emergency exit, drafted</p>
-      <h1 id="page-heading">What are you trying to escape?</h1>
-      <p class="lede">Pick the situation and how bold you’re feeling. You’ll get one ready-to-send line—specific enough to work, simple enough to remember.</p>
+      <div>
+        <p class="tag">For when “no” needs a little help</p>
+        <h1 id="page-heading">Need an out?</h1>
+        <p class="lede">Pick the mess you’re in. We’ll hand you a text that sounds like you, not your lawyer.</p>
+      </div>
+      <p class="tiny-note">Short, believable, and ready to copy.</p>
     </section>
 
-    <section class="workspace" aria-label="Excuse builder">
+    <section class="workspace" aria-label="Build your message">
       <form class="controls" id="controls">
+        <h2 class="controls-title">Okay, what happened?</h2>
         <div class="step">
-          <label class="label" for="situation"><span class="number">1</span>The situation</label>
+          <label class="label" for="situation"><span class="number">1</span>What are we dodging?</label>
           <select id="situation" name="situation">
-            <option value="plans">Canceling plans</option>
-            <option value="late">Running late</option>
-            <option value="work">Missing a work deadline</option>
-            <option value="call">Dodging a call</option>
-            <option value="event">Leaving an event early</option>
-            <option value="reply">Replying way too late</option>
+            <option value="plans">Plans I regret making</option>
+            <option value="late">I’m definitely late</option>
+            <option value="work">A deadline I fumbled</option>
+            <option value="call">A call I cannot take</option>
+            <option value="event">I want to go home</option>
+            <option value="reply">A painfully late reply</option>
           </select>
         </div>
 
         <fieldset class="step" style="border:0;padding:0">
-          <legend class="label"><span class="number">2</span>Delivery style</legend>
+          <legend class="label"><span class="number">2</span>How should it sound?</legend>
           <div class="chips">
-            <label class="chip"><input type="radio" name="tone" value="honest" checked><span>Low drama</span></label>
-            <label class="chip"><input type="radio" name="tone" value="polished"><span>Polished</span></label>
-            <label class="chip"><input type="radio" name="tone" value="bold"><span>Bold</span></label>
+            <label class="chip"><input type="radio" name="tone" value="honest" checked><span>Just honest</span></label>
+            <label class="chip"><input type="radio" name="tone" value="smooth"><span>Nice &amp; tidy</span></label>
+            <label class="chip"><input type="radio" name="tone" value="cheeky"><span>A little cheeky</span></label>
           </div>
         </fieldset>
 
         <div class="step">
-          <label class="label" for="audience"><span class="number">3</span>Who’s asking?</label>
+          <label class="label" for="audience"><span class="number">3</span>Who gets the text?</label>
           <select id="audience" name="audience">
-            <option value="friend">A friend</option>
-            <option value="date">A date</option>
+            <option value="friend">My friend</option>
+            <option value="date">My date</option>
             <option value="coworker">A coworker</option>
             <option value="boss">My boss</option>
-            <option value="family">Family</option>
-            <option value="group">A group chat</option>
+            <option value="family">My family</option>
+            <option value="group">The group chat</option>
           </select>
         </div>
 
-        <button class="generate" type="submit">Write my way out</button>
+        <button class="generate" type="submit">Save me</button>
       </form>
 
-      <div>
-        <div class="result-wrap">
-          <article class="note" aria-live="polite" aria-atomic="true">
-            <div class="note-meta"><span id="noteLabel">Canceling plans</span><span id="quality">Low drama</span></div>
-            <p class="excuse" id="excuse">Hey—my day got away from me and I don’t have the energy to be good company tonight. Can we take a rain check?</p>
-            <div class="hint">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 22c4.4 0 8-3.6 8-8 0-5-4.8-10.1-7-12.2a1.4 1.4 0 0 0-2 0C8.8 4 4 9 4 14c0 4.4 3.6 8 8 8Z"/><path d="M9 15.5c.8 1 1.8 1.5 3 1.5 1.2 0 2.2-.5 3-1.5"/></svg>
-              <span id="tip">Best sent early. A clear rain check is more believable than a long story.</span>
-            </div>
-          </article>
+      <article class="result-card" aria-live="polite" aria-atomic="true">
+        <div class="result-top">
+          <span class="context" id="context">Plans I regret making · my friend</span>
+          <span class="rating" id="toneLabel">Just honest</span>
         </div>
-        <div class="actions" aria-label="Excuse actions">
+        <p class="message-label">Your text</p>
+        <p class="message" id="message">Hey, I’m completely wiped and I’d be terrible company tonight. Can we take a rain check?</p>
+        <div class="tip">
+          <span class="tip-mark" aria-hidden="true">i</span>
+          <span id="tip">Send it sooner rather than later. Nobody enjoys getting canceled on while they’re putting on shoes.</span>
+        </div>
+        <div class="actions" aria-label="Message actions">
           <button class="action" id="another" type="button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 7h-5V2"/><path d="M20 2l-4.4 4.4A8 8 0 1 0 19 17"/></svg>
-            Try another
+            Give me another
           </button>
           <button class="action" id="copy" type="button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            Copy
+            Copy text
           </button>
           <button class="action" id="download" type="button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5"/><path d="M5 21h14"/></svg>
-            Download
+            Save .txt
           </button>
         </div>
-      </div>
+      </article>
     </section>
-    <p class="fineprint">Use judgment. The cleanest exit is often a short, honest one.</p>
+    <p class="footer-note">Tiny reminder: a simple “I can’t make it” is allowed too.</p>
   </main>
-  <div class="toast" id="toast" role="status">Copied to clipboard</div>
+  <div class="toast" id="toast" role="status">Copied. Go be free.</div>
 
   <script>
     (function () {
       var data = {
-        plans: {
-          label: "Canceling plans",
-          tips: ["Best sent early. A clear rain check is more believable than a long story.", "Offer a new day only if you actually want to reschedule."],
-          honest: [
-            "Hey—my day got away from me and I don’t have the energy to be good company tonight. Can we take a rain check?",
-            "I’m more wiped out than I expected, and I need a quiet night. I’m sorry for the late change—can we reschedule?",
-            "I overcommitted this week and need to bow out tonight. I’d rather be honest than show up at half-speed."
-          ],
-          polished: [
-            "I’m sorry for the change, but something time-sensitive came up and I won’t be able to make it tonight. Could we find another day?",
-            "I need to step back from tonight’s plans. I know it’s short notice, and I appreciate your understanding.",
-            "A personal matter needs my attention this evening, so I have to cancel. I’d be glad to reconnect next week."
-          ],
-          bold: [
-            "I have to invoke an emergency night-in. Nothing dramatic—I just know I’ll be terrible company if I force it. Rain check?",
-            "Tonight has officially exceeded my social operating budget. I’m tapping out before I become the worst version of myself.",
-            "I need to cancel. My calendar said yes, but every other part of me has filed an appeal."
-          ]
+        "plans": {
+                "label": "Plans I regret making",
+                "tips": [
+                        "Send it sooner rather than later. Nobody enjoys getting canceled on while they’re putting on shoes.",
+                        "Only offer another day if you actually want another day. Future you says thanks."
+                ]
         },
-        late: {
-          label: "Running late",
-          tips: ["Give one honest arrival time, then add five minutes. Don’t send a moving target.", "An updated ETA is more useful than a detailed explanation."],
-          honest: [
-            "I misjudged the timing and I’m running about 15 minutes late. I’m on my way now—sorry to keep you waiting.",
-            "I’m behind schedule and should be there in about 15 minutes. I’ll message if that changes.",
-            "I left later than I should have. My real ETA is about 20 minutes—sorry."
-          ],
-          polished: [
-            "A delay threw off my timing. I’m now expecting to arrive in about 20 minutes and apologize for the wait.",
-            "I’m running behind and wanted to give you a realistic update: I should be there in about 15 minutes.",
-            "My timing shifted unexpectedly. I’m en route and should arrive within 20 minutes. Thank you for your patience."
-          ],
-          bold: [
-            "My ETA and reality have had a disagreement. Reality won—I’m about 15 minutes out.",
-            "I planned this like someone who has never encountered traffic or time. Real ETA: 20 minutes.",
-            "Quick correction: ‘almost there’ was emotionally true, not geographically true. Give me 15 minutes."
-          ]
+        "late": {
+                "label": "I’m definitely late",
+                "tips": [
+                        "Give one real arrival time and stick to it. A moving ETA helps nobody.",
+                        "Nobody needs the full documentary. A real ETA is the useful part."
+                ]
         },
-        work: {
-          label: "Missing a deadline",
-          tips: ["Own the miss, name the new delivery time, and avoid inventing a technical disaster.", "A concrete recovery plan matters more than a dramatic reason."],
-          honest: [
-            "I underestimated the work involved and won’t have a solid version ready today. I can deliver it by noon tomorrow.",
-            "I’m not going to hit today’s deadline. That’s on me. I need until tomorrow afternoon to finish it properly.",
-            "I’m behind on this and should have flagged it sooner. I can send the completed version by noon tomorrow."
-          ],
-          polished: [
-            "I need to revise the delivery timing. The work requires another pass, and I can provide a complete version tomorrow afternoon.",
-            "I won’t meet today’s deadline, but I have a clear path to completion and will deliver by noon tomorrow.",
-            "The current version isn’t ready to circulate. I’m completing the remaining work and will send it tomorrow afternoon."
-          ],
-          bold: [
-            "I could send something on time or something useful, but not both. I’m choosing useful and need until tomorrow afternoon.",
-            "The deadline arrived before the finished work did. I own that—I’ll have the proper version to you by noon tomorrow.",
-            "I’m calling it before I submit a beautifully formatted mistake. I need until tomorrow afternoon for a clean version."
-          ]
+        "work": {
+                "label": "A deadline I fumbled",
+                "tips": [
+                        "Own the miss, give a new time, and skip the imaginary Wi-Fi disaster.",
+                        "A clear recovery plan sounds better than a five paragraph explanation."
+                ]
         },
-        call: {
-          label: "Dodging a call",
-          tips: ["Suggest text or a later time so it feels like a redirect, not a disappearance.", "Keep it short—the more details you add, the stranger it sounds."],
-          honest: [
-            "I can’t talk right now—can you text me what’s up?",
-            "I’m not in a good spot for a call. Can I ring you later today?",
-            "I don’t have the bandwidth for a proper call right now, but I can reply by text."
-          ],
-          polished: [
-            "I’m tied up at the moment and can’t give this call proper attention. Could we connect later today?",
-            "I’m unavailable to talk right now. Please send the key details by text and I’ll get back to you.",
-            "I can’t step away for a call at the moment. Would later this afternoon work instead?"
-          ],
-          bold: [
-            "I saw the call. I’m alive. I just cannot be perceived by phone right now—text me?",
-            "My phone-call personality is currently out of office. Send me the headline by text.",
-            "I can answer, but you’d get the low-battery version of me. Can we try later?"
-          ]
+        "call": {
+                "label": "A call I cannot take",
+                "tips": [
+                        "Offer text or a better time. It feels like a redirect, not a disappearance.",
+                        "Keep it short. Every extra detail makes it sound weirder."
+                ]
         },
-        event: {
-          label: "Leaving early",
-          tips: ["Thank the host before you go. A warm goodbye lands better than a vanishing act.", "Leave while you’re still enjoying yourself—it makes the exit feel natural."],
-          honest: [
-            "I’m going to head out—I’ve hit my limit, but I’m really glad I came. Thanks for having me.",
-            "I need to call it a night earlier than planned. This was lovely—thank you for inviting me.",
-            "I’m fading fast, so I’m going to make a graceful exit while I still can. Thank you for tonight."
-          ],
-          polished: [
-            "I need to head out, but I wanted to thank you before I go. It’s been a wonderful evening.",
-            "I have an early start tomorrow, so I’m going to slip out. Thank you so much for having me.",
-            "I’m going to make an early exit, but I’m very glad I could be here. Thank you for a great evening."
-          ],
-          bold: [
-            "I’m leaving at the exact right moment: before I stop being charming. Thank you for having me.",
-            "My social battery has reached the red zone, so I’m making a responsible exit. This was great.",
-            "I’m going to disappear before someone starts a second event inside this event. Thanks for tonight."
-          ]
+        "event": {
+                "label": "I want to go home",
+                "tips": [
+                        "Thank the host before you leave. A warm goodbye beats a mysterious vanishing.",
+                        "Go while you’re still having fun. That is how you leave on a high note."
+                ]
         },
-        reply: {
-          label: "Late reply",
-          tips: ["Acknowledge the delay once, then answer the message. Don’t write an apology essay.", "You don’t need to invent a crisis to explain a quiet inbox."],
-          honest: [
-            "Sorry I went quiet—I read this, meant to reply properly, and let it slip. Here’s my actual answer:",
-            "I’m late getting back to you. I didn’t want to send a rushed reply, then waited much too long.",
-            "This fell off my radar, and that’s my fault. Sorry for leaving you hanging."
-          ],
-          polished: [
-            "Apologies for the delayed response, and thank you for your patience. To answer your question:",
-            "I’m sorry for the gap in communication. I’ve had a chance to look at this properly now.",
-            "Thank you for following up. I should have replied sooner; here’s where things stand:"
-          ],
-          bold: [
-            "I drafted this reply in my head days ago and apparently expected telepathy to handle the rest. Sorry.",
-            "I have no elegant explanation—your message entered the void between ‘I’ll reply later’ and now.",
-            "I’m resurfacing with the reply I absolutely believed I had already sent. Sorry about that."
-          ]
+        "reply": {
+                "label": "A painfully late reply",
+                "tips": [
+                        "Apologize once, then answer the message. Nobody ordered an apology essay.",
+                        "You don’t need a fictional emergency to explain a quiet inbox."
+                ]
         }
-      };
+};
+
+      var templates = {
+        "friend": {
+                "plans": {
+                        "honest": [
+                                "Hey, I’m completely wiped and I’d be terrible company tonight. Can we take a rain check?",
+                                "I overbooked myself and need a quiet night. Sorry for bailing. Can we pick another day?"
+                        ],
+                        "smooth": [
+                                "I’m really sorry, but I need to bow out tonight. Want to move this to next week?",
+                                "Tonight got away from me. Could we reschedule? I still really want to catch up."
+                        ],
+                        "cheeky": [
+                                "My calendar said yes, but the rest of me has filed an appeal. Rain check?",
+                                "I have reached my weekly limit for being a person in public. Can we reschedule?"
+                        ]
+                },
+                "late": {
+                        "honest": [
+                                "I messed up the timing and I’m about 15 minutes late. I’m on my way now. Sorry!",
+                                "I left later than I should have. Real ETA is 20 minutes. My bad."
+                        ],
+                        "smooth": [
+                                "Quick update: I’m running about 15 minutes behind, but I’m on my way.",
+                                "My timing slipped. I should be there in 20 minutes. Sorry to keep you waiting."
+                        ],
+                        "cheeky": [
+                                "My ETA and reality had a disagreement. Reality won. I’m 15 minutes away.",
+                                "When I said almost there, I meant emotionally. Geographically, give me 20 minutes."
+                        ]
+                },
+                "work": {
+                        "honest": [
+                                "I’m stuck finishing something for work and it’s taking longer than I planned. I may be quiet tonight.",
+                                "I fumbled a deadline and need to fix it tonight. I’ll catch you when I’m back among the living."
+                        ],
+                        "smooth": [
+                                "Work needs a little more of me tonight than expected. I’ll message when I’m clear.",
+                                "I have to finish a deadline tonight, so I’m going off the radar for a bit. Talk soon."
+                        ],
+                        "cheeky": [
+                                "I lost a fight with a deadline. Send snacks and assume I’m typing.",
+                                "Work has me in a tiny headlock tonight. I’ll return when the document releases me."
+                        ]
+                },
+                "call": {
+                        "honest": [
+                                "I can’t talk right now. Can you text me what’s up?",
+                                "Bad time for a call. Can I ring you later today?"
+                        ],
+                        "smooth": [
+                                "I’m tied up at the moment. Could we talk later today instead?",
+                                "I can’t give a call proper attention right now. Send me the headline and I’ll get back to you."
+                        ],
+                        "cheeky": [
+                                "I saw the call. I’m alive. I just can’t be perceived by phone right now. Text me?",
+                                "My phone-call personality is out of office. Send me the headline by text."
+                        ]
+                },
+                "event": {
+                        "honest": [
+                                "I’m going to head out. I’ve hit my limit, but I’m really glad I came. Catch you tomorrow?",
+                                "I’m fading fast, so I’m calling it a night. Thanks for making tonight fun."
+                        ],
+                        "smooth": [
+                                "I’m going to head out, but I wanted to say bye properly. It was really good seeing you.",
+                                "I have an early start, so I’m slipping out. Let’s catch up properly soon."
+                        ],
+                        "cheeky": [
+                                "I’m leaving at the perfect moment: before I stop being charming. See you soon.",
+                                "My social battery is blinking red, so I’m making a responsible exit. Love you, bye."
+                        ]
+                },
+                "reply": {
+                        "honest": [
+                                "Sorry I went quiet. I read this, meant to reply, and completely let it slip. Here’s my actual answer:",
+                                "I’m late getting back to you. This fell off my radar and that’s on me. Sorry."
+                        ],
+                        "smooth": [
+                                "Sorry for the slow reply. I’ve finally had a chance to give this proper attention.",
+                                "Thanks for waiting on me. I should have replied sooner. Here’s where I’m at:"
+                        ],
+                        "cheeky": [
+                                "I drafted this reply in my head days ago and apparently expected telepathy to do the rest. Sorry.",
+                                "Your message fell into the void between I’ll reply later and now. I’m back."
+                        ]
+                }
+        },
+        "date": {
+                "plans": {
+                        "honest": [
+                                "I’m sorry, but I don’t have the energy to be good company tonight. Could we try another night?",
+                                "I need to be honest: I’m wiped and tonight won’t be my best self. Can I make it up to you?"
+                        ],
+                        "smooth": [
+                                "I was looking forward to seeing you, but I need to reschedule tonight. Are you free later this week?",
+                                "Tonight suddenly got away from me. Could we move our plans? I’d still really like to see you."
+                        ],
+                        "cheeky": [
+                                "I want our date to feature my personality, and it has clocked out for tonight. Rain check?",
+                                "Tiny romantic plot twist: I need to reschedule. I promise the sequel has better energy."
+                        ]
+                },
+                "late": {
+                        "honest": [
+                                "I’m really sorry, I’m running 15 minutes late. I’m on my way and I’ll be there at 7:45.",
+                                "I got the timing wrong and I hate keeping you waiting. My real ETA is 20 minutes."
+                        ],
+                        "smooth": [
+                                "Quick heads-up: I’m about 15 minutes behind. I’m on my way and looking forward to seeing you.",
+                                "I’m running later than planned. I should be there in 20 minutes. First drink is on me."
+                        ],
+                        "cheeky": [
+                                "I’m 15 minutes late, which is a terrible opening move. I’m on my way to redeem myself.",
+                                "My entrance is becoming suspiciously dramatic. Real ETA: 20 minutes."
+                        ]
+                },
+                "work": {
+                        "honest": [
+                                "I messed up a work deadline and need tonight to get it back on track. I’m sorry, but can we reschedule?",
+                                "Work ran later than I planned and I need to finish this properly. Could we pick another night?"
+                        ],
+                        "smooth": [
+                                "A work deadline needs my attention tonight, so I need to move our plans. Are you free this weekend?",
+                                "I have to finish something for work tonight. I’m sorry for the change, and I’d love to reschedule."
+                        ],
+                        "cheeky": [
+                                "A deadline just third-wheeled our date. Can we reschedule once I break up with this spreadsheet?",
+                                "Work chose violence tonight. Can I take you out when I’ve escaped?"
+                        ]
+                },
+                "call": {
+                        "honest": [
+                                "I can’t talk properly right now, but I do want to hear from you. Can I call you later tonight?",
+                                "Bad moment for a call. Can we talk in an hour when I can actually focus on you?"
+                        ],
+                        "smooth": [
+                                "I’m tied up right now. Could I call you later this evening when I can give you my full attention?",
+                                "I can’t step away at the moment, but I’d love to talk later. Does 8 work?"
+                        ],
+                        "cheeky": [
+                                "I want to sound charming, and right now I sound like a loading screen. Call you later?",
+                                "My current phone-call energy is deeply unromantic. Let me try you tonight."
+                        ]
+                },
+                "event": {
+                        "honest": [
+                                "I’m fading and I think I need to head home. I had a really good time with you tonight.",
+                                "I need to call it a night, but I’m glad we came together. Can I text you when I’m home?"
+                        ],
+                        "smooth": [
+                                "I’m ready to head out. I’ve loved spending the evening with you, though.",
+                                "I need to make an early exit tonight. Want to leave together or catch up tomorrow?"
+                        ],
+                        "cheeky": [
+                                "My social battery is on one percent, but my review of our date is still five stars. I’m heading home.",
+                                "I’m about to stop being cute and start yawning, so I’m making my exit."
+                        ]
+                },
+                "reply": {
+                        "honest": [
+                                "I’m sorry I disappeared. I liked hearing from you and still managed to overthink my reply.",
+                                "I took way too long to answer. That wasn’t fair to you. I’d still like to keep talking if you do."
+                        ],
+                        "smooth": [
+                                "Sorry for the slow reply. I wanted to give you a real answer instead of a rushed one.",
+                                "I owe you a quicker reply than this. I hope I haven’t missed my chance to answer properly."
+                        ],
+                        "cheeky": [
+                                "I spent so long trying to sound interesting that silence became my whole personality. Hi again.",
+                                "This reply took the scenic route. I promise the interest was here before the typing was."
+                        ]
+                }
+        },
+        "coworker": {
+                "plans": {
+                        "honest": [
+                                "I need to step back from our plans tonight. I’m wiped after today. Can we reschedule?",
+                                "I overcommitted this week and need to cancel tonight. Sorry for the short notice."
+                        ],
+                        "smooth": [
+                                "I’m sorry, but I need to move our plans tonight. Would sometime next week work?",
+                                "Something shifted on my end, so I won’t make it tonight. Let’s find another time."
+                        ],
+                        "cheeky": [
+                                "Today used up all my after-hours personality. Can we move this to next week?",
+                                "I have officially clocked out of both work and socializing. Rain check?"
+                        ]
+                },
+                "late": {
+                        "honest": [
+                                "I’m running about 15 minutes late. I’m on my way and will be there by 9:15.",
+                                "I misjudged the timing. My updated ETA is 20 minutes. Sorry for the delay."
+                        ],
+                        "smooth": [
+                                "Quick timing update: I’m about 15 minutes behind and heading over now.",
+                                "I’m running later than planned. I should arrive in 20 minutes. Thanks for your patience."
+                        ],
+                        "cheeky": [
+                                "My calendar was optimistic. I’m 15 minutes out and moving.",
+                                "Today added one last plot twist. Real ETA: 20 minutes."
+                        ]
+                },
+                "work": {
+                        "honest": [
+                                "I underestimated my part and I won’t finish it today. I can send it by noon tomorrow.",
+                                "I’m behind on this and should have flagged it earlier. I’ll have my section ready tomorrow morning."
+                        ],
+                        "smooth": [
+                                "I need a little more time to finish my part properly. I can send it by noon tomorrow.",
+                                "The work needs one more pass. I’ll share a complete version tomorrow morning."
+                        ],
+                        "cheeky": [
+                                "My section needs one more date with quality control. I’ll send it by noon tomorrow.",
+                                "The deadline arrived before my finished draft. I own that and will have it ready tomorrow."
+                        ]
+                },
+                "call": {
+                        "honest": [
+                                "I can’t jump on a call right now. Can you send me the key points here?",
+                                "I’m in the middle of something. Could we talk at 3 instead?"
+                        ],
+                        "smooth": [
+                                "I’m tied up at the moment. Please send the main details and I’ll follow up shortly.",
+                                "I can’t give the call proper attention right now. Would 3 this afternoon work?"
+                        ],
+                        "cheeky": [
+                                "I’m currently losing a fight with my to-do list. Can you send me the headline here?",
+                                "My meeting brain needs a minute to reboot. Could we talk at 3?"
+                        ]
+                },
+                "event": {
+                        "honest": [
+                                "I’m going to head out. I’m wiped, but I’m glad I came. See you at work.",
+                                "I need to call it a night. Thanks for making this fun outside office hours."
+                        ],
+                        "smooth": [
+                                "I’m heading out, but it was great spending time together outside work. See you Monday.",
+                                "I have an early start, so I’m making an exit. Thanks for a really nice evening."
+                        ],
+                        "cheeky": [
+                                "I’m leaving before this becomes an unofficial team off-site. See you Monday.",
+                                "My social battery just submitted its resignation. Great night, everyone."
+                        ]
+                },
+                "reply": {
+                        "honest": [
+                                "Sorry for the late reply. This slipped past me. Here’s the update:",
+                                "I should have answered sooner. I’ve reviewed it now, and here’s where things stand:"
+                        ],
+                        "smooth": [
+                                "Thanks for your patience. I’ve had a chance to look at this properly now.",
+                                "Apologies for the slow response. Here’s the information you needed:"
+                        ],
+                        "cheeky": [
+                                "This message hid under three tabs and a calendar invite. I found it. Here’s the update:",
+                                "My inbox won that round. I’m back with an actual answer now:"
+                        ]
+                }
+        },
+        "boss": {
+                "plans": {
+                        "honest": [
+                                "I’m sorry, but I need to cancel our plans tonight. I’m not feeling up to it and wanted to let you know early.",
+                                "I need to step back from tonight’s plans. I apologize for the change. Could we find another time?"
+                        ],
+                        "smooth": [
+                                "I’m sorry, but I won’t be able to make it tonight. Would another evening next week work for you?",
+                                "Something has come up on my end, so I need to reschedule tonight. I appreciate your understanding."
+                        ],
+                        "cheeky": [
+                                "My energy has officially missed its target for tonight. Could we take a rain check?",
+                                "I need to call an audible on tonight’s plans. May we reschedule for next week?"
+                        ]
+                },
+                "late": {
+                        "honest": [
+                                "I’m running 15 minutes late. I’m on my way and expect to arrive at 9:15. I apologize.",
+                                "I misjudged my travel time. My updated arrival is 9:20. Sorry for the delay."
+                        ],
+                        "smooth": [
+                                "Quick update: I’m delayed and expect to arrive at 9:15. Thank you for your patience.",
+                                "I’m running behind schedule. My current ETA is 9:20, and I’ll keep you updated."
+                        ],
+                        "cheeky": [
+                                "My schedule was more ambitious than accurate this morning. I’ll be there at 9:15.",
+                                "A small timing plot twist: my updated arrival is 9:20. I apologize for the delay."
+                        ]
+                },
+                "work": {
+                        "honest": [
+                                "I underestimated the work and won’t meet today’s deadline. I should have raised this sooner. I can deliver by noon tomorrow.",
+                                "I’m behind on this, and that’s my responsibility. I’ll send the completed version tomorrow morning."
+                        ],
+                        "smooth": [
+                                "I need to adjust the delivery time. I can provide a complete version by noon tomorrow.",
+                                "The work needs another pass before it’s ready. I’ll deliver the finished version tomorrow morning."
+                        ],
+                        "cheeky": [
+                                "I can send something today or something useful tomorrow. I recommend useful, with delivery by noon.",
+                                "The deadline beat the final draft here. I own the miss and will have it ready tomorrow morning."
+                        ]
+                },
+                "call": {
+                        "honest": [
+                                "I can’t take a call at the moment. Could we speak at 3 this afternoon?",
+                                "I’m tied up right now. Please send the key point by text and I’ll respond as soon as I can."
+                        ],
+                        "smooth": [
+                                "I’m unavailable for a call right now. Would 3 this afternoon work instead?",
+                                "I can’t step away at the moment. Please send the main details and I’ll follow up shortly."
+                        ],
+                        "cheeky": [
+                                "My calendar has me fully booked at the moment. Could we reconnect at 3?",
+                                "I’m currently buried in the work we discussed. Please send the headline and I’ll follow up shortly."
+                        ]
+                },
+                "event": {
+                        "honest": [
+                                "I’m going to head out. Thank you for including me. I’m glad I came.",
+                                "I need to leave a little earlier than planned. Thank you for a great evening."
+                        ],
+                        "smooth": [
+                                "I’m making an early exit, but I wanted to thank you before I go. It’s been a lovely evening.",
+                                "I have an early start, so I’m heading out. Thank you very much for having me."
+                        ],
+                        "cheeky": [
+                                "I’m leaving while I’m still making coherent conversation. Thank you for a great evening.",
+                                "My early start is winning this negotiation. Thank you for having me tonight."
+                        ]
+                },
+                "reply": {
+                        "honest": [
+                                "I apologize for the late response. I missed this earlier. Here’s the update:",
+                                "I should have replied sooner. I’ve reviewed the message now, and here’s where things stand:"
+                        ],
+                        "smooth": [
+                                "Thank you for your patience. I’ve reviewed this and have an update for you:",
+                                "Apologies for the delay. I now have the information you requested:"
+                        ],
+                        "cheeky": [
+                                "This reply took longer than the work itself. I apologize. Here’s the update:",
+                                "My inbox got ahead of me. I’ve caught up and have the answer now:"
+                        ]
+                }
+        },
+        "family": {
+                "plans": {
+                        "honest": [
+                                "I’m really tired and need to stay home tonight. I’m sorry to miss it. Can we do something soon?",
+                                "I overbooked myself and need a quiet night. I love you, and I’m sorry for bailing."
+                        ],
+                        "smooth": [
+                                "I need to sit tonight out, but I’d love to see everyone another day. Can we plan something soon?",
+                                "I’m sorry, but I can’t make it tonight. Please save me some food and a story or two."
+                        ],
+                        "cheeky": [
+                                "I inherited many things from this family, including the need to cancel tonight. Love you. Rain check?",
+                                "I’m staying home before I become the grumpy relative at dinner. Please forgive me."
+                        ]
+                },
+                "late": {
+                        "honest": [
+                                "I’m running about 15 minutes late. I’m on my way now. Sorry!",
+                                "I got the timing wrong. I should be there in 20 minutes. Don’t wait to start."
+                        ],
+                        "smooth": [
+                                "Quick update: I’m about 15 minutes behind, but I’m heading over now.",
+                                "I’m running later than planned. I’ll be there in 20 minutes. Save me a seat."
+                        ],
+                        "cheeky": [
+                                "Yes, I know, the family clock was right about me again. I’m 15 minutes away.",
+                                "I’m late enough for a lecture, but only 20 minutes late. See you soon."
+                        ]
+                },
+                "work": {
+                        "honest": [
+                                "I’m behind on a work deadline and need tonight to finish it. I’ll call when I’m done.",
+                                "Work got away from me today. I need a few more hours to fix it, so I may be quiet tonight."
+                        ],
+                        "smooth": [
+                                "I have a deadline to finish tonight, so I’ll be off the radar for a bit. I’ll check in tomorrow.",
+                                "Work needs my attention this evening. I’m okay, just busy. I’ll call you soon."
+                        ],
+                        "cheeky": [
+                                "Work has grounded me tonight. I’ll call when the spreadsheet gives me back.",
+                                "I fumbled a deadline, so I’m putting myself in professional time-out. Talk tomorrow."
+                        ]
+                },
+                "call": {
+                        "honest": [
+                                "I can’t talk right now. Is everything okay? Text me and I’ll call later.",
+                                "I’m in the middle of something. Can I call you tonight?"
+                        ],
+                        "smooth": [
+                                "I can’t give a call proper attention right now. Please text me if it’s urgent, and I’ll call later.",
+                                "I’m tied up at the moment. Could I call you this evening instead?"
+                        ],
+                        "cheeky": [
+                                "I’m alive, fed, and unable to talk right now. Text me the headline.",
+                                "I can’t answer without triggering a 45-minute family update. Call you tonight?"
+                        ]
+                },
+                "event": {
+                        "honest": [
+                                "I’m going to head home. I’m tired, but I’m really glad I came. Love you all.",
+                                "I need to leave a little early tonight. Thanks for having me. I had a lovely time."
+                        ],
+                        "smooth": [
+                                "I’m heading out, but I wanted to say a proper goodbye first. Thank you for tonight.",
+                                "I have an early start, so I’m calling it a night. I’m glad we got this time together."
+                        ],
+                        "cheeky": [
+                                "I’m leaving before someone brings out the old photo albums. Love you, bye.",
+                                "My social battery comes from this family, so you understand why I’m heading home."
+                        ]
+                },
+                "reply": {
+                        "honest": [
+                                "Sorry I went quiet. I saw your message and forgot to reply. I’m okay. Here’s the update:",
+                                "I should have answered sooner. Nothing is wrong. I just let the message slip."
+                        ],
+                        "smooth": [
+                                "Sorry for the slow reply. I’m all right, and I finally have a proper answer for you.",
+                                "Thanks for checking in. I should have replied sooner. Here’s what’s going on:"
+                        ],
+                        "cheeky": [
+                                "I survived, I ate, and I forgot to reply. Here’s the family bulletin:",
+                                "I know silence means you assume I vanished. I’m here, and I finally remembered to answer."
+                        ]
+                }
+        },
+        "group": {
+                "plans": {
+                        "honest": [
+                                "Friends, I’m completely wiped and need to sit tonight out. Sorry for bailing. Have fun for me.",
+                                "I overbooked myself and can’t make it tonight. I’m sorry, everyone. Please send the highlights."
+                        ],
+                        "smooth": [
+                                "Quick update, everyone: I need to bow out tonight. I hope you all have a brilliant time.",
+                                "I can’t make it tonight after all. Sorry for the change. I’m in for the next one."
+                        ],
+                        "cheeky": [
+                                "The group has voted to go out. My body has filed a dissenting opinion. I’m sitting this one out.",
+                                "I love you all from the comfort of my couch. Please create one mildly regrettable story for me."
+                        ]
+                },
+                "late": {
+                        "honest": [
+                                "I’m running 15 minutes late, everyone. Start without me. I’m on my way.",
+                                "I got the timing wrong. Real ETA is 20 minutes. Please proceed with the gossip."
+                        ],
+                        "smooth": [
+                                "Quick timing update: I’m about 15 minutes behind. I’ll meet you there shortly.",
+                                "I’m running later than planned. My updated ETA is 20 minutes. See you soon."
+                        ],
+                        "cheeky": [
+                                "Breaking news: I’m late. Less breaking news: you all knew this. ETA 15 minutes.",
+                                "Start the fun without me. I’m bringing a dramatic entrance in about 20 minutes."
+                        ]
+                },
+                "work": {
+                        "honest": [
+                                "I fumbled a work deadline and need to fix it tonight. I’ll be quiet in here until I escape.",
+                                "Work is taking longer than planned. I’m going off-grid for a few hours. Carry on without me."
+                        ],
+                        "smooth": [
+                                "A work deadline needs my attention tonight, so I’ll be quiet for a while. Catch you all later.",
+                                "I have to finish something for work, so I’m muting the chaos until I’m done."
+                        ],
+                        "cheeky": [
+                                "A deadline has kidnapped me. Continue the nonsense and tag me in anything important.",
+                                "I’m entering spreadsheet prison. Please keep the chat unproductive in my absence."
+                        ]
+                },
+                "call": {
+                        "honest": [
+                                "I can’t join the call right now. Can someone drop the main point in here?",
+                                "Bad time for a group call. I can catch up later if someone sends me the headline."
+                        ],
+                        "smooth": [
+                                "I can’t make the call right now. Please share the key details here and I’ll follow up.",
+                                "I’m tied up at the moment. Could someone post a quick summary afterward?"
+                        ],
+                        "cheeky": [
+                                "I cannot enter the group-call arena right now. Someone send me the plot summary.",
+                                "My phone-call personality is missing. Please brief me in memes and bullet points."
+                        ]
+                },
+                "event": {
+                        "honest": [
+                                "I’m heading home, everyone. I’ve hit my limit, but tonight was really fun.",
+                                "I’m calling it a night. Thanks for a great time. Get home safe, all of you."
+                        ],
+                        "smooth": [
+                                "I’m making an early exit, but I’m really glad I came. Have a great rest of the night.",
+                                "I’m heading out now. Lovely seeing everyone, and thank you for such a fun evening."
+                        ],
+                        "cheeky": [
+                                "I’m leaving before this group invents an after-after-party. Love you, bye.",
+                                "My social battery just left the chat, so I’m following it home."
+                        ]
+                },
+                "reply": {
+                        "honest": [
+                                "Sorry, everyone. I read all of this, forgot to answer, and now there are 86 messages. I’m caught up.",
+                                "I disappeared from the chat for a minute. My bad. What did I miss besides everything?"
+                        ],
+                        "smooth": [
+                                "Sorry for the slow reply, everyone. I’m caught up now and here’s my answer:",
+                                "Thanks for waiting on me. I finally read the full thread and I’m back in the room."
+                        ],
+                        "cheeky": [
+                                "I opened this chat at 86 unread messages and chose fear. I’m ready now.",
+                                "I left for five minutes and returned to a novel. I read it. Here’s my official statement:"
+                        ]
+                }
+        }
+};
 
       var situation = document.getElementById("situation");
       var audience = document.getElementById("audience");
-      var excuse = document.getElementById("excuse");
-      var noteLabel = document.getElementById("noteLabel");
-      var quality = document.getElementById("quality");
+      var message = document.getElementById("message");
+      var context = document.getElementById("context");
+      var toneText = document.getElementById("toneLabel");
       var tip = document.getElementById("tip");
       var toast = document.getElementById("toast");
-      var lastIndex = -1;
+      var lastKey = "";
       var audienceLabels = {
-        friend: "a friend",
-        date: "a date",
+        friend: "my friend",
+        date: "my date",
         coworker: "a coworker",
-        boss: "your boss",
-        family: "family",
-        group: "a group chat"
+        boss: "my boss",
+        family: "my family",
+        group: "the group chat"
       };
 
       function currentTone() {
         return document.querySelector('input[name="tone"]:checked').value;
       }
-      function toneLabel(value) {
-        return value === "honest" ? "Low drama" : value.charAt(0).toUpperCase() + value.slice(1);
+      function friendlyTone(value) {
+        if (value === "honest") return "Just honest";
+        if (value === "smooth") return "Nice & tidy";
+        return "A little cheeky";
       }
-      function nextIndex(length) {
-        if (length < 2) return 0;
-        var index = Math.floor(Math.random() * length);
-        if (index === lastIndex) index = (index + 1) % length;
-        lastIndex = index;
-        return index;
+      function pick(list, prefix) {
+        var index = Math.floor(Math.random() * list.length);
+        var key = prefix + index;
+        if (key === lastKey && list.length > 1) {
+          index = (index + 1) % list.length;
+          key = prefix + index;
+        }
+        lastKey = key;
+        return list[index];
       }
       function generate() {
         var section = data[situation.value];
         var tone = currentTone();
-        var list = section[tone];
-        var chosen = list[nextIndex(list.length)];
-        noteLabel.textContent = section.label + " · " + audienceLabels[audience.value];
-        quality.textContent = toneLabel(tone);
-        excuse.textContent = chosen;
+        message.textContent = pick(templates[audience.value][situation.value][tone], audience.value + situation.value + tone);
+        context.textContent = section.label + " · " + audienceLabels[audience.value];
+        toneText.textContent = friendlyTone(tone);
         tip.textContent = section.tips[Math.floor(Math.random() * section.tips.length)];
       }
-      function showToast(message) {
-        toast.textContent = message;
+      function showToast(text) {
+        toast.textContent = text;
         toast.classList.add("show");
         window.clearTimeout(showToast.timer);
-        showToast.timer = window.setTimeout(function () { toast.classList.remove("show"); }, 1800);
+        showToast.timer = window.setTimeout(function () {
+          toast.classList.remove("show");
+        }, 1800);
       }
       function fallbackCopy(text) {
         var area = document.createElement("textarea");
@@ -575,8 +1102,12 @@
         area.style.opacity = "0";
         document.body.appendChild(area);
         area.select();
-        try { document.execCommand("copy"); showToast("Copied to clipboard"); }
-        catch (e) { showToast("Couldn’t copy—select the note instead"); }
+        try {
+          document.execCommand("copy");
+          showToast("Copied. Go be free.");
+        } catch (error) {
+          showToast("Copy missed. Select the text instead.");
+        }
         document.body.removeChild(area);
       }
 
@@ -586,26 +1117,34 @@
       });
       document.getElementById("another").addEventListener("click", generate);
       document.getElementById("copy").addEventListener("click", function () {
-        var text = excuse.textContent;
+        var text = message.textContent;
         if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(text).then(function () { showToast("Copied to clipboard"); }, function () { fallbackCopy(text); });
-        } else { fallbackCopy(text); }
+          navigator.clipboard.writeText(text).then(function () {
+            showToast("Copied. Go be free.");
+          }, function () {
+            fallbackCopy(text);
+          });
+        } else {
+          fallbackCopy(text);
+        }
       });
       document.getElementById("download").addEventListener("click", function () {
-        var blob = new Blob([excuse.textContent + "\n"], { type: "text/plain;charset=utf-8" });
+        var blob = new Blob([message.textContent + "\n"], { type: "text/plain;charset=utf-8" });
         var url = URL.createObjectURL(blob);
-        var a = document.createElement("a");
-        a.href = url;
-        a.download = "excuse-note.txt";
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
+        var anchor = document.createElement("a");
+        anchor.href = url;
+        anchor.download = "my-text.txt";
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
         window.setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-        showToast("Note downloaded");
+        showToast("Saved to your downloads.");
       });
       situation.addEventListener("change", generate);
       audience.addEventListener("change", generate);
-      document.querySelectorAll('input[name="tone"]').forEach(function (input) { input.addEventListener("change", generate); });
+      document.querySelectorAll('input[name="tone"]').forEach(function (input) {
+        input.addEventListener("change", generate);
+      });
     }());
   </script>
 </body>
