@@ -249,6 +249,50 @@
     .scribble.short { width: 67%; }
     .scribble.tiny { width: 42%; }
 
+    .visual.alt { background: var(--yellow); }
+    .visual.alt::before { background: var(--blue); }
+    .visual.alt::after { background: var(--blue); border-radius: 6px; }
+
+    .thought-bubble {
+      position: relative;
+      z-index: 1;
+      width: min(270px, 85%);
+      padding: 30px 26px;
+      background: #fffdf5;
+      color: #171713;
+      border: 3px solid #171713;
+      border-radius: 26px;
+      box-shadow: 8px 8px 0 #171713;
+      transform: rotate(3deg);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(20px, 3vw, 26px);
+      line-height: 1.25;
+      text-align: center;
+    }
+
+    .thought-bubble::before,
+    .thought-bubble::after {
+      content: "";
+      position: absolute;
+      background: #fffdf5;
+      border: 3px solid #171713;
+      border-radius: 50%;
+    }
+
+    .thought-bubble::before {
+      width: 26px;
+      height: 26px;
+      left: 34px;
+      bottom: -24px;
+    }
+
+    .thought-bubble::after {
+      width: 14px;
+      height: 14px;
+      left: 16px;
+      bottom: -42px;
+    }
+
     .project-copy {
       display: flex;
       flex-direction: column;
@@ -434,7 +478,7 @@
 
     <section class="intro" aria-labelledby="page-title">
       <h1 id="page-title">The project <em>shelf.</em></h1>
-      <p class="count">1 thing in the wild</p>
+      <p class="count">2 things in the wild</p>
     </section>
 
     <a class="project" href="../excuse-generator/" aria-label="Open the Excuse Generator">
@@ -455,6 +499,21 @@
           <p class="description">For those moments when your brain clocks out right as someone asks, “So what happened?” Pick a situation and walk away with a line worth trying.</p>
         </div>
         <span class="open">Go make an excuse <b aria-hidden="true">↗</b></span>
+      </div>
+    </a>
+
+    <a class="project" href="../thought-of-the-day/" aria-label="Open Thought of the Day">
+      <div class="visual alt" aria-hidden="true">
+        <div class="thought-bubble">hmm, what if...</div>
+      </div>
+
+      <div class="project-copy">
+        <div>
+          <span class="number">PROJECT 002</span>
+          <h2>Thought of the Day</h2>
+          <p class="description">One honest thought per phone, per day. Drop yours to unlock the stream and read what everyone else is thinking. No names, no replies.</p>
+        </div>
+        <span class="open">Drop today's thought <b aria-hidden="true">↗</b></span>
       </div>
     </a>
 
