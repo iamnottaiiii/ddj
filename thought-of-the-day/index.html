@@ -221,6 +221,14 @@ async function alreadyPostedToday(pubHex) {
   return results.some(r => r.status === 'fulfilled' && r.value.length > 0);
 }
 
+function displayTime(e) {
+  let h = 0;
+  for (let i = 0; i < e.id.length; i++) h = (h * 31 + e.id.charCodeAt(i)) >>> 0;
+  const startMs = startOfToday() * 1000;
+  const span = Math.max(60000, Date.now() - startMs);
+  return new Date(startMs + (h % span)).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+}
+
 function render(i) {
   pos = i;
   const card = $('card'), endcard = $('endcard'), next = $('next');
@@ -237,7 +245,7 @@ function render(i) {
   endcard.classList.add('hidden');
   next.classList.remove('hidden');
   $('thought-text').textContent = e.content;
-  $('thought-time').textContent = new Date(e.created_at * 1000).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  $('thought-time').textContent = displayTime(e);
 }
 
 let deck = [], pos = 0, deckReady = false, atEnd = false, eoseCount = 0, eoseTimer = null, subs = [];
