@@ -89,13 +89,6 @@
     text-transform: uppercase;
     color: #8a8578;
   }
-  .empty {
-    text-align: center;
-    color: #8a8578;
-    font-style: italic;
-    padding: 40px 0;
-    font-size: 17px;
-  }
   footer { text-align: center; margin-top: auto; padding: 48px 0 36px; }
   footer a {
     font-family: Arial, sans-serif;
@@ -126,7 +119,17 @@
 
   <div id="stream" class="hidden">
     <h2>Today's thoughts</h2>
-    <div id="list"></div>
+    <div id="card" class="tcard">
+      <p id="thought-text"></p>
+      <div id="thought-time" class="ttime"></div>
+    </div>
+    <div id="endcard" class="tcard hidden">
+      <p>That's every thought for today. Come back tomorrow.</p>
+    </div>
+    <div class="row">
+      <span id="pos" class="count"></span>
+      <button id="next">Next thought</button>
+    </div>
   </div>
 
   <div id="bootfail" class="err hidden">This page couldn't start. Check your connection and refresh.</div>
@@ -219,49 +222,81 @@ async function alreadyPostedToday(pubHex) {
   return results.some(r => r.status === 'fulfilled' && r.value.length > 0);
 }
 
-function paintList(events) {
-  const list = $('list');
-  if (!events.length) {
-    list.innerHTML = '<div class="empty">No thoughts yet today. Yours could be the first.</div>';
+function render(i) {
+  pos = i;
+  const card = $('card'), endcard = $('endcard'), next = $('next'), posEl = $('pos');
+  if (i >= deck.length) {
+    atEnd = true;
+    card.classList.add('hidden');
+    endcard.classList.remove('hidden');
+    next.classList.add('hidden');
+    posEl.textContent = '';
     return;
   }
-  const sorted = [...events].sort((a, b) => b.created_at - a.created_at);
-  list.innerHTML = '';
-  sorted.forEach(e => {
-    const card = document.createElement('div');
-    card.className = 'tcard';
-    const p = document.createElement('p');
-    p.textContent = e.content;
-    const t = document.createElement('div');
-    t.className = 'ttime';
-    t.textContent = new Date(e.created_at * 1000).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-    card.appendChild(p);
-    card.appendChild(t);
-    list.appendChild(card);
-  });
+  atEnd = false;
+  const e = deck[i];
+  card.classList.remove('hidden');
+  endcard.classList.add('hidden');
+  next.classList.remove('hidden');
+  $('thought-text').textContent = e.content;
+  $('thought-time').textContent = new Date(e.created_at * 1000).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  posEl.textContent = (i + 1) + ' of ' + deck.length;
 }
+
+let deck = [], pos = 0, deckReady = false, atEnd = false, eoseCount = 0, eoseTimer = null, subs = [];
 
 function showStream() {
   $('gate').classList.add('hidden');
   $('stream').classList.remove('hidden');
-  const seen = new Set();
-  const events = [];
+  subs.forEach(s => { try { s.close(); } catch (e) {} });
+  subs = [];
+  clearTimeout(eoseTimer);
+  deck = []; pos = 0; deckReady = false; atEnd = false; eoseCount = 0;
+  const card = $('card'), endcard = $('endcard'), next = $('next'), posEl = $('pos');
   if (!conns.length) {
-    $('list').innerHTML = '<div class="empty">Could not reach the thought stream. Check your connection and refresh.</div>';
+    $('thought-text').textContent = 'Could not reach the thought stream. Check your connection and refresh.';
+    $('thought-time').textContent = '';
+    card.classList.remove('hidden');
+    endcard.classList.add('hidden');
+    next.classList.add('hidden');
+    posEl.textContent = '';
     return;
   }
-  $('list').innerHTML = '<div class="empty">Listening for today\u2019s thoughts\u2026</div>';
+  $('thought-text').textContent = 'Listening for today\u2019s thoughts\u2026';
+  $('thought-time').textContent = '';
+  posEl.textContent = '';
+  card.classList.remove('hidden');
+  endcard.classList.add('hidden');
+  next.classList.remove('hidden');
+  next.disabled = true;
+  const seen = new Set();
+  const finalize = () => {
+    if (deckReady) return;
+    deckReady = true;
+    for (let i = deck.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [deck[i], deck[j]] = [deck[j], deck[i]];
+    }
+    next.disabled = false;
+    render(0);
+  };
+  eoseTimer = setTimeout(finalize, 6000);
   conns.forEach(({ relay }) => {
     try {
-      relay.subscribe(
+      const sub = relay.subscribe(
         [{ kinds: [1], '#t': [TAG], since: startOfToday(), limit: 200 }],
         { onevent: (e) => {
             if (seen.has(e.id)) return;
             seen.add(e.id);
-            events.push(e);
-            paintList(events);
+            deck.push(e);
+            if (deckReady && atEnd) render(deck.length - 1);
+          },
+          oneose: () => {
+            eoseCount++;
+            if (eoseCount >= conns.length) { clearTimeout(eoseTimer); finalize(); }
           } }
       );
+      subs.push(sub);
     } catch (e) {}
   });
 }
@@ -309,6 +344,7 @@ try {
   err.classList.remove('hidden');
 }
 $('drop').addEventListener('click', onDrop);
+$('next').addEventListener('click', () => render(pos + 1));
 if (postedToday) showStream();
 
 // ---- background: connect, then settle anything the fast path couldn't
