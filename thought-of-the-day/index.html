@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thought of the Day</title>
+<title>Thought of the Day — I Made Something Cool</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -17,272 +17,329 @@
   }
   .wrap { max-width: 620px; margin: 0 auto; width: 100%; flex: 1; display: flex; flex-direction: column; }
   main { flex: 1; width: 100%; }
-  header { text-align: center; margin: 28px 0 8px; }
-  header .kicker {
-    font-family: -apple-system, 'Segoe UI', sans-serif;
-    font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
-    color: #b3402a; margin-bottom: 10px;
-  }
-  h1 { font-size: 44px; line-height: 1.05; margin-bottom: 10px; }
-  .sub {
-    font-family: -apple-system, 'Segoe UI', sans-serif;
-    font-size: 15px; color: #5c564a; line-height: 1.5;
-  }
-  .rule { border: none; border-top: 2px solid #1c1a17; margin: 22px 0; }
-
-  .gate, .stream-head { margin-top: 10px; }
-  .gate-card {
-    background: #fffdf6;
-    border: 2px solid #1c1a17;
-    padding: 26px 22px;
-    margin-top: 18px;
-  }
-  .gate-card h2 { font-size: 26px; margin-bottom: 8px; }
-  .gate-card p {
-    font-family: -apple-system, 'Segoe UI', sans-serif;
-    font-size: 15px; color: #5c564a; line-height: 1.55; margin-bottom: 16px;
-  }
-  textarea {
-    width: 100%; min-height: 110px; resize: vertical;
-    border: 2px solid #1c1a17; background: #fff;
-    font-family: Georgia, serif; font-size: 18px; line-height: 1.5;
-    padding: 12px 14px; color: #1c1a17;
-  }
-  textarea:focus { outline: 3px solid #b3402a33; }
-  .row { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; gap: 12px; flex-wrap: wrap; }
-  .count { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 13px; color: #8a8272; }
-  button {
-    background: #b3402a; color: #fffdf6;
-    border: 2px solid #1c1a17;
-    font-family: -apple-system, 'Segoe UI', sans-serif;
-    font-size: 17px; font-weight: 700;
-    padding: 12px 34px; cursor: pointer;
-  }
-  button:active { transform: translateY(2px); }
-  button:disabled { background: #c9c2b2; cursor: wait; }
-  .err {
-    display: none;
-    font-family: -apple-system, 'Segoe UI', sans-serif;
-    font-size: 14px; color: #b3402a; margin-top: 10px; line-height: 1.5;
-  }
-
-  .thought {
-    background: #fffdf6;
-    border: 2px solid #1c1a17;
-    padding: 18px 18px 12px;
+  header { text-align: center; padding: 36px 0 8px; }
+  .kicker {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #8a8578;
     margin-bottom: 14px;
   }
-  .thought p { font-size: 19px; line-height: 1.55; margin-bottom: 10px; overflow-wrap: break-word; }
-  .thought .meta {
-    font-family: -apple-system, 'Segoe UI', sans-serif;
-    font-size: 12px; color: #8a8272; letter-spacing: 1px; text-transform: uppercase;
+  h1 { font-size: 40px; font-weight: bold; margin-bottom: 10px; }
+  .sub { font-size: 17px; color: #4a463c; font-style: italic; }
+  .rule { border: none; border-top: 2px solid #1c1a17; margin: 26px 0; }
+  .gate {
+    border: 2px solid #1c1a17;
+    background: #fffdf6;
+    padding: 26px 22px;
+    box-shadow: 5px 5px 0 #1c1a17;
   }
-  .day-label {
-    font-family: -apple-system, 'Segoe UI', sans-serif;
-    font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
-    color: #b3402a; margin: 26px 0 12px;
-    border-bottom: 2px solid #1c1a17; padding-bottom: 6px;
+  .gate-note { font-size: 16px; line-height: 1.6; margin-bottom: 18px; color: #4a463c; }
+  textarea {
+    width: 100%;
+    min-height: 110px;
+    border: 2px solid #1c1a17;
+    background: #fff;
+    font-family: Georgia, serif;
+    font-size: 18px;
+    padding: 12px;
+    resize: vertical;
+    color: #1c1a17;
   }
-  .loading, .empty {
-    text-align: center; padding: 40px 10px;
-    font-family: -apple-system, 'Segoe UI', sans-serif;
-    color: #8a8272; font-size: 15px; line-height: 1.6;
+  textarea:focus { outline: 3px solid #E07840; outline-offset: 1px; }
+  .row { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+  .count { font-family: Arial, sans-serif; font-size: 13px; color: #8a8578; }
+  button {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    background: #E07840;
+    color: #fff;
+    border: 2px solid #1c1a17;
+    padding: 10px 26px;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 #1c1a17;
   }
-  .done-note {
-    background: #fffdf6; border: 2px solid #1c1a17;
-    padding: 16px 18px; margin-bottom: 20px;
-    font-family: -apple-system, 'Segoe UI', sans-serif;
-    font-size: 15px; line-height: 1.55;
+  button:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #1c1a17; }
+  button:disabled { opacity: 0.55; cursor: default; }
+  .netstatus { font-family: Arial, sans-serif; font-size: 12px; color: #8a8578; margin-top: 12px; }
+  .err {
+    margin-top: 14px;
+    border: 2px solid #a33c2a;
+    background: #fbeee9;
+    color: #a33c2a;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    padding: 10px 12px;
   }
-  .done-note strong { color: #b3402a; }
-  footer { text-align: center; margin-top: auto; padding: 48px 0 36px; }
-  footer a { color: #b3402a; font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 14px; }
-  footer p { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 12px; color: #a39a86; margin-top: 10px; line-height: 1.6; }
   .hidden { display: none !important; }
+  #stream h2 { font-size: 24px; margin: 6px 0 18px; text-align: center; }
+  .tcard {
+    border: 2px solid #1c1a17;
+    background: #fffdf6;
+    padding: 18px;
+    margin-bottom: 16px;
+    box-shadow: 4px 4px 0 #1c1a17;
+  }
+  .tcard p { font-size: 18px; line-height: 1.55; }
+  .tcard .ttime {
+    margin-top: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #8a8578;
+  }
+  .empty {
+    text-align: center;
+    color: #8a8578;
+    font-style: italic;
+    padding: 40px 0;
+    font-size: 17px;
+  }
+  footer { text-align: center; margin-top: auto; padding: 48px 0 36px; }
+  footer a {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #1c1a17;
+    text-decoration: underline;
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
   <main>
   <header>
-    <div class="kicker">I made something cool</div>
+    <div class="kicker">I Made Something Cool</div>
     <h1>Thought of the Day</h1>
     <p class="sub">What's your thought of the day?</p>
   </header>
   <hr class="rule">
 
-  <div id="gate" class="gate hidden">
-    <div class="gate-card">
-      <h2>What's on your mind today?</h2>
-      <p>No names, no replies, no likes. Just one honest thought, and then you get to read everyone else's. That's the whole deal.</p>
-      <textarea id="box" maxlength="200" placeholder="Type today's thought..."></textarea>
-      <div class="row">
-        <span class="count"><span id="n">0</span>/200</span>
-        <button id="drop">Drop it</button>
-      </div>
-      <div class="err" id="err"></div>
+  <div id="gate" class="gate">
+    <p class="gate-note">No names, no replies, no likes. Just one honest thought, and then you get to read everyone else's. That's the whole deal.</p>
+    <textarea id="box" maxlength="200" placeholder="Type today's thought..."></textarea>
+    <div class="row">
+      <span id="n" class="count">0 / 200</span>
+      <button id="drop">Drop it</button>
     </div>
+    <div id="netstatus" class="netstatus">connecting to the thought stream&hellip;</div>
+    <div id="err" class="err hidden"></div>
   </div>
 
   <div id="stream" class="hidden">
-    <div class="stream-head">
-      <div class="done-note" id="doneNote"></div>
-      <div id="list"></div>
-    </div>
+    <h2>Today's thoughts</h2>
+    <div id="list"></div>
   </div>
 
-  <div id="boot" class="loading">Waking up the thought stream...</div>
+  <div id="bootfail" class="err hidden">This page couldn't start. Check your connection and refresh.</div>
   </main>
 
   <footer>
-    <a href="../projects/">Back to the project shelf</a>
-    <p>Anonymous. One a day.<br>Thoughts are public to anyone reading the stream.</p>
+    <a href="/projects/">Back to the project shelf</a>
   </footer>
 </div>
 
+<script>
+setTimeout(function () {
+  if (!window.__totd_alive) document.getElementById('bootfail').classList.remove('hidden');
+}, 6000);
+</script>
 <script type="module">
 import { generateSecretKey, getPublicKey, finalizeEvent, Relay } from 'https://cdn.jsdelivr.net/npm/nostr-tools@2.25.2/+esm';
+window.__totd_alive = true;
 
+const RELAYS = [
+  'wss://relay.damus.io',
+  'wss://nos.lol',
+  'wss://nostrue.com',
+  'wss://relay.primal.net'
+];
 const TAG = 'imsc-thought-of-the-day';
-const RELAYS = ['wss://relay.damus.io', 'wss://nos.lol', 'wss://nostrue.com', 'wss://relay.primal.net'];
-const MAXLEN = 200;
-const BAD = ['fuck','shit','bitch','cunt','nigger','nigga','fag','retard','whore','slut','dick','pussy','cock'];
+const $ = id => document.getElementById(id);
 
-const $ = (id) => document.getElementById(id);
-const esc = (s) => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-const dayStr = (d = new Date()) => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-const dayStart = () => { const d = new Date(); d.setHours(0,0,0,0); return Math.floor(d.getTime()/1000); };
-const labelFor = (ts) => {
-  const t = dayStr(new Date(ts*1000)), today = dayStr();
-  const y = new Date(); y.setDate(y.getDate()-1);
-  if (t === today) return 'Today';
-  if (t === dayStr(y)) return 'Yesterday';
-  return t;
+const dayStr = () => {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
 };
+const startOfToday = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return Math.floor(d.getTime() / 1000); };
 
-let sk = localStorage.getItem('totd_sk');
-if (!sk) {
-  sk = Array.from(generateSecretKey()).map(b => b.toString(16).padStart(2,'0')).join('');
-  try { localStorage.setItem('totd_sk', sk); } catch(e) {}
+const BANNED = ['fuck','shit','bitch','cunt','nigger','nigga','faggot','retard','whore','slut','porn','xxx'];
+
+let conns = [];
+let keyBytes = null;
+let postedToday = false;
+try { postedToday = localStorage.getItem('totd_day') === dayStr(); } catch (e) {}
+
+function getKey() {
+  let hex = null;
+  try { hex = localStorage.getItem('totd_sk'); } catch (e) {}
+  if (!hex) {
+    const sk = generateSecretKey();
+    hex = Array.from(sk).map(b => b.toString(16).padStart(2, '0')).join('');
+    try { localStorage.setItem('totd_sk', hex); } catch (e) {}
+  }
+  return new Uint8Array(hex.match(/../g).map(h => parseInt(h, 16)));
 }
-const skBytes = new Uint8Array(sk.match(/../g).map(h => parseInt(h,16)));
-const pk = getPublicKey(skBytes);
 
-async function connect() {
-  const conns = [];
-  await Promise.all(RELAYS.map(async (url) => {
+function setStatus(txt, bad) {
+  const s = $('netstatus');
+  if (!s) return;
+  s.textContent = txt;
+  s.style.color = bad ? '#a33c2a' : '#8a8578';
+}
+
+async function tryConnect() {
+  const attempts = RELAYS.map(url =>
+    Promise.race([
+      Relay.connect(url, { timeout: 9000 }).then(r => ({ url, relay: r })).catch(() => null),
+      new Promise(res => setTimeout(() => res(null), 10000))
+    ])
+  );
+  const results = await Promise.allSettled(attempts);
+  return results.map(r => r.status === 'fulfilled' ? r.value : null).filter(Boolean);
+}
+
+function queryOnce(relay, filter, ms) {
+  return new Promise(resolve => {
+    const found = [];
+    let done = false;
+    let sub = null;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      try { if (sub) sub.close(); } catch (e) {}
+      resolve(found);
+    };
+    const timer = setTimeout(finish, ms);
     try {
-      const r = await Relay.connect(url, { timeout: 12000 });
-      conns.push(r);
-    } catch(e) { /* relay down, skip */ }
-  }));
-  return conns;
-}
-function queryAll(conns, filter, timeoutMs = 9000) {
-  return new Promise((resolve) => {
-    const seen = new Map();
-    let done = 0;
-    if (!conns.length) return resolve([]);
-    conns.forEach((r) => {
-      let sub;
-      const fin = () => { done++; if (done === conns.length) resolve([...seen.values()]); };
-      try {
-        sub = r.subscribe([filter], {
-          onevent(e) { if (e && e.id && !seen.has(e.id)) seen.set(e.id, e); },
-          oneose() { try { sub.close(); } catch(e2) {} fin(); },
-        });
-      } catch(e) { fin(); }
-      setTimeout(() => { try { sub && sub.close(); } catch(e) {} if (done < conns.length) { /* wait others */ } }, timeoutMs);
-    });
-    setTimeout(() => resolve([...seen.values()]), timeoutMs + 1500);
+      sub = relay.subscribe([filter], {
+        onevent: (e) => { found.push(e); },
+        oneose: () => finish()
+      });
+    } catch (e) { finish(); }
   });
 }
-async function publishAll(conns, event) {
-  let ok = 0;
-  await Promise.all(conns.map(async (r) => {
-    try { await r.publish(event); ok++; } catch(e) {}
-  }));
-  return ok;
-}
-const cleanEnough = (t) => !BAD.some(w => t.toLowerCase().includes(w));
 
-async function alreadyPostedToday(conns) {
-  try {
-    const mine = await queryAll(conns, { kinds:[1], authors:[pk], '#t':[TAG], since: dayStart(), limit: 5 }, 7000);
-    return mine.length > 0;
-  } catch(e) { return localStorage.getItem('totd_day') === dayStr(); }
+async function alreadyPostedToday(pubHex) {
+  if (!conns.length) return false;
+  const filter = { kinds: [1], authors: [pubHex], '#t': [TAG], since: startOfToday(), limit: 5 };
+  const results = await Promise.allSettled(conns.map(({ relay }) => queryOnce(relay, filter, 7000)));
+  return results.some(r => r.status === 'fulfilled' && r.value.length > 0);
 }
 
-function renderThoughts(events) {
+function paintList(events) {
   const list = $('list');
-  events.sort((a,b) => b.created_at - a.created_at);
   if (!events.length) {
-    list.innerHTML = '<div class="empty">Nothing here yet.<br>Be the first thought of the day.</div>';
+    list.innerHTML = '<div class="empty">No thoughts yet today. Yours could be the first.</div>';
     return;
   }
-  let html = '', lastLabel = null;
-  for (const e of events) {
-    const label = labelFor(e.created_at);
-    if (label !== lastLabel) { html += '<div class="day-label">' + esc(label) + '</div>'; lastLabel = label; }
-    html += '<div class="thought"><p>' + esc(e.content).replace(/\n/g,'<br>') + '</p><div class="meta">someone, somewhere</div></div>';
-  }
-  list.innerHTML = html;
+  const sorted = [...events].sort((a, b) => b.created_at - a.created_at);
+  list.innerHTML = '';
+  sorted.forEach(e => {
+    const card = document.createElement('div');
+    card.className = 'tcard';
+    const p = document.createElement('p');
+    p.textContent = e.content;
+    const t = document.createElement('div');
+    t.className = 'ttime';
+    t.textContent = new Date(e.created_at * 1000).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+    card.appendChild(p);
+    card.appendChild(t);
+    list.appendChild(card);
+  });
 }
 
-async function showStream(conns) {
+function showStream() {
   $('gate').classList.add('hidden');
   $('stream').classList.remove('hidden');
-  $('doneNote').innerHTML = 'You already dropped today\'s thought. <strong>Come back tomorrow</strong> for a fresh one. Meanwhile, here is what everyone else is thinking.';
-  $('list').innerHTML = '<div class="loading">Reading minds...</div>';
-  const events = await queryAll(conns, { kinds:[1], '#t':[TAG], limit: 300 });
-  const valid = events.filter(e => e.content && e.content.length <= 500 && cleanEnough(e.content));
-  renderThoughts(valid);
-}
-
-async function boot() {
-  const box = $('box'), err = $('err');
-  box.addEventListener('input', () => { $('n').textContent = box.value.length; });
-  let conns = await connect();
+  const seen = new Set();
+  const events = [];
   if (!conns.length) {
-    $('boot').innerHTML = 'Could not reach the thought stream.<br>Check your connection and <a href="" style="color:#b3402a">try again</a>.';
+    $('list').innerHTML = '<div class="empty">Could not reach the thought stream. Check your connection and refresh.</div>';
     return;
   }
-  $('boot').classList.add('hidden');
-  const posted = localStorage.getItem('totd_day') === dayStr() || await alreadyPostedToday(conns);
-  if (posted) { showStream(conns); return; }
-
-  $('gate').classList.remove('hidden');
-  $('drop').addEventListener('click', async () => {
-    err.style.display = 'none';
-    const text = box.value.trim();
-    if (!text) { err.textContent = 'Give us something. Anything.'; err.style.display = 'block'; return; }
-    if (!cleanEnough(text)) { err.textContent = 'Keep it clean-ish. Try again.'; err.style.display = 'block'; return; }
-    $('drop').disabled = true;
-    $('drop').textContent = 'Dropping...';
+  $('list').innerHTML = '<div class="empty">Listening for today\u2019s thoughts\u2026</div>';
+  conns.forEach(({ relay }) => {
     try {
-      if (await alreadyPostedToday(conns)) {
-        try { localStorage.setItem('totd_day', dayStr()); } catch(e) {}
-        showStream(conns);
-        return;
-      }
-      const event = finalizeEvent({
-        kind: 1, created_at: Math.floor(Date.now()/1000),
-        tags: [['t', TAG]], content: text,
-      }, skBytes);
-      const n = await publishAll(conns, event);
-      if (!n) throw new Error('publish failed');
-      try { localStorage.setItem('totd_day', dayStr()); } catch(e) {}
-      showStream(conns);
-    } catch(e) {
-      err.textContent = 'That did not go through. Check your connection and try again.';
-      err.style.display = 'block';
-      $('drop').disabled = false;
-      $('drop').textContent = 'Drop it';
-    }
+      relay.subscribe(
+        [{ kinds: [1], '#t': [TAG], since: startOfToday(), limit: 200 }],
+        { onevent: (e) => {
+            if (seen.has(e.id)) return;
+            seen.add(e.id);
+            events.push(e);
+            paintList(events);
+          } }
+      );
+    } catch (e) {}
   });
 }
 
-boot();
+async function onDrop() {
+  const box = $('box'), err = $('err'), btn = $('drop');
+  err.classList.add('hidden');
+  const text = box.value.trim();
+  if (!text) { err.textContent = 'Write something first.'; err.classList.remove('hidden'); return; }
+  if (BANNED.some(w => text.toLowerCase().includes(w))) { err.textContent = 'Keep it clean.'; err.classList.remove('hidden'); return; }
+  btn.disabled = true;
+  btn.textContent = 'Dropping\u2026';
+  if (!conns.length) {
+    setStatus('reconnecting\u2026');
+    conns = await tryConnect();
+  }
+  if (!conns.length) {
+    err.textContent = 'Could not reach the thought stream. Check your connection and try again.';
+    err.classList.remove('hidden');
+    setStatus('offline \u2014 posting unavailable', true);
+    btn.disabled = false;
+    btn.textContent = 'Drop it';
+    return;
+  }
+  setStatus('connected to the thought stream');
+  const ev = finalizeEvent(
+    { kind: 1, created_at: Math.floor(Date.now() / 1000), tags: [['t', TAG]], content: text.slice(0, 200) },
+    keyBytes
+  );
+  await Promise.allSettled(conns.map(({ relay }) =>
+    Promise.race([relay.publish(ev).catch(() => null), new Promise(res => setTimeout(res, 8000))])
+  ));
+  try { localStorage.setItem('totd_day', dayStr()); } catch (e) {}
+  postedToday = true;
+  btn.disabled = false;
+  btn.textContent = 'Drop it';
+  showStream();
+}
+
+// ---- boot: the form shows immediately, nothing waits on the network
+const box = $('box');
+box.addEventListener('input', () => { $('n').textContent = box.value.length + ' / 200'; });
+try {
+  keyBytes = getKey();
+} catch (e) {
+  const err = $('err');
+  err.textContent = 'Could not start. Try a modern browser.';
+  err.classList.remove('hidden');
+}
+$('drop').addEventListener('click', onDrop);
+if (postedToday) showStream();
+
+// ---- background: connect, then settle anything the fast path couldn't
+(async () => {
+  conns = await tryConnect();
+  if (conns.length) {
+    setStatus('connected to the thought stream');
+  } else {
+    setStatus('offline \u2014 posting unavailable', true);
+  }
+  if (!postedToday && conns.length && keyBytes) {
+    let pubHex = null;
+    try { pubHex = getPublicKey(keyBytes); } catch (e) {}
+    if (pubHex && await alreadyPostedToday(pubHex)) postedToday = true;
+  }
+  if (postedToday) showStream();
+})();
 </script>
 </body>
 </html>
