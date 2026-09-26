@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thought of the Day</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #FBF6E9;
+    color: #1c1a17;
+    font-family: Georgia, 'Times New Roman', serif;
+    min-height: 100vh;
+    padding: 24px 16px 60px;
+  }
+  .wrap { max-width: 620px; margin: 0 auto; }
+  header { text-align: center; margin: 28px 0 8px; }
+  header .kicker {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+    color: #b3402a; margin-bottom: 10px;
+  }
+  h1 { font-size: 44px; line-height: 1.05; margin-bottom: 10px; }
+  .sub {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 15px; color: #5c564a; line-height: 1.5;
+  }
+  .rule { border: none; border-top: 2px solid #1c1a17; margin: 22px 0; }
+
+  .gate, .stream-head { margin-top: 10px; }
+  .gate-card {
+    background: #fffdf6;
+    border: 2px solid #1c1a17;
+    padding: 26px 22px;
+    margin-top: 18px;
+  }
+  .gate-card h2 { font-size: 26px; margin-bottom: 8px; }
+  .gate-card p {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 15px; color: #5c564a; line-height: 1.55; margin-bottom: 16px;
+  }
+  textarea {
+    width: 100%; min-height: 110px; resize: vertical;
+    border: 2px solid #1c1a17; background: #fff;
+    font-family: Georgia, serif; font-size: 18px; line-height: 1.5;
+    padding: 12px 14px; color: #1c1a17;
+  }
+  textarea:focus { outline: 3px solid #b3402a33; }
+  .row { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; gap: 12px; flex-wrap: wrap; }
+  .count { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 13px; color: #8a8272; }
+  button {
+    background: #b3402a; color: #fffdf6;
+    border: 2px solid #1c1a17;
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 17px; font-weight: 700;
+    padding: 12px 34px; cursor: pointer;
+  }
+  button:active { transform: translateY(2px); }
+  button:disabled { background: #c9c2b2; cursor: wait; }
+  .err {
+    display: none;
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 14px; color: #b3402a; margin-top: 10px; line-height: 1.5;
+  }
+
+  .thought {
+    background: #fffdf6;
+    border: 2px solid #1c1a17;
+    padding: 18px 18px 12px;
+    margin-bottom: 14px;
+  }
+  .thought p { font-size: 19px; line-height: 1.55; margin-bottom: 10px; overflow-wrap: break-word; }
+  .thought .meta {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 12px; color: #8a8272; letter-spacing: 1px; text-transform: uppercase;
+  }
+  .day-label {
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+    color: #b3402a; margin: 26px 0 12px;
+    border-bottom: 2px solid #1c1a17; padding-bottom: 6px;
+  }
+  .loading, .empty {
+    text-align: center; padding: 40px 10px;
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    color: #8a8272; font-size: 15px; line-height: 1.6;
+  }
+  .done-note {
+    background: #fffdf6; border: 2px solid #1c1a17;
+    padding: 16px 18px; margin-bottom: 20px;
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-size: 15px; line-height: 1.55;
+  }
+  .done-note strong { color: #b3402a; }
+  footer { text-align: center; margin-top: 44px; }
+  footer a { color: #b3402a; font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 14px; }
+  footer p { font-family: -apple-system, 'Segoe UI', sans-serif; font-size: 12px; color: #a39a86; margin-top: 10px; line-height: 1.6; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">I made something cool</div>
+    <h1>Thought of the Day</h1>
+    <p class="sub">One thought per phone, per day.<br>Drop yours to unlock everyone else's.</p>
+  </header>
+  <hr class="rule">
+
+  <div id="gate" class="gate hidden">
+    <div class="gate-card">
+      <h2>What's on your mind today?</h2>
+      <p>No names, no replies, no likes. Just one honest thought, and then you get to read everyone else's. That's the whole deal.</p>
+      <textarea id="box" maxlength="200" placeholder="Type today's thought..."></textarea>
+      <div class="row">
+        <span class="count"><span id="n">0</span>/200</span>
+        <button id="drop">Drop it</button>
+      </div>
+      <div class="err" id="err"></div>
+    </div>
+  </div>
+
+  <div id="stream" class="hidden">
+    <div class="stream-head">
+      <div class="done-note" id="doneNote"></div>
+      <div id="list"></div>
+    </div>
+  </div>
+
+  <div id="boot" class="loading">Waking up the thought stream...</div>
+
+  <footer>
+    <a href="../projects/">Back to the project shelf</a>
+    <p>Anonymous. One thought per phone per day.<br>Thoughts are public to anyone reading the stream.</p>
+  </footer>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "@noble/curves/secp256k1.js": "https://cdn.jsdelivr.net/npm/@noble/curves@2.0.1/secp256k1.js",
+    "@noble/hashes/sha2.js": "https://cdn.jsdelivr.net/npm/@noble/hashes@2.0.1/sha2.js",
+    "@noble/hashes/utils.js": "https://cdn.jsdelivr.net/npm/@noble/hashes@2.0.1/utils.js"
+  }
+}
+</script>
+<script type="module">
+import { generateSecretKey, getPublicKey, finalizeEvent } from 'https://cdn.jsdelivr.net/npm/nostr-tools@2.25.2/lib/esm/pure.js';
+import { Relay } from 'https://cdn.jsdelivr.net/npm/nostr-tools@2.25.2/lib/esm/relay.js';
+
+const TAG = 'imsc-thought-of-the-day';
+const RELAYS = ['wss://relay.damus.io', 'wss://nos.lol', 'wss://nostrue.com', 'wss://relay.primal.net'];
+const MAXLEN = 200;
+const BAD = ['fuck','shit','bitch','cunt','nigger','nigga','fag','retard','whore','slut','dick','pussy','cock'];
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const dayStr = (d = new Date()) => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+const dayStart = () => { const d = new Date(); d.setHours(0,0,0,0); return Math.floor(d.getTime()/1000); };
+const labelFor = (ts) => {
+  const t = dayStr(new Date(ts*1000)), today = dayStr();
+  const y = new Date(); y.setDate(y.getDate()-1);
+  if (t === today) return 'Today';
+  if (t === dayStr(y)) return 'Yesterday';
+  return t;
+};
+
+let sk = localStorage.getItem('totd_sk');
+if (!sk) {
+  sk = Array.from(generateSecretKey()).map(b => b.toString(16).padStart(2,'0')).join('');
+  try { localStorage.setItem('totd_sk', sk); } catch(e) {}
+}
+const skBytes = new Uint8Array(sk.match(/../g).map(h => parseInt(h,16)));
+const pk = getPublicKey(skBytes);
+
+async function connect() {
+  const conns = [];
+  await Promise.all(RELAYS.map(async (url) => {
+    try {
+      const r = await Relay.connect(url, { timeout: 12000 });
+      conns.push(r);
+    } catch(e) { /* relay down, skip */ }
+  }));
+  return conns;
+}
+function queryAll(conns, filter, timeoutMs = 9000) {
+  return new Promise((resolve) => {
+    const seen = new Map();
+    let done = 0;
+    if (!conns.length) return resolve([]);
+    conns.forEach((r) => {
+      let sub;
+      const fin = () => { done++; if (done === conns.length) resolve([...seen.values()]); };
+      try {
+        sub = r.subscribe([filter], {
+          onevent(e) { if (e && e.id && !seen.has(e.id)) seen.set(e.id, e); },
+          oneose() { try { sub.close(); } catch(e2) {} fin(); },
+        });
+      } catch(e) { fin(); }
+      setTimeout(() => { try { sub && sub.close(); } catch(e) {} if (done < conns.length) { /* wait others */ } }, timeoutMs);
+    });
+    setTimeout(() => resolve([...seen.values()]), timeoutMs + 1500);
+  });
+}
+async function publishAll(conns, event) {
+  let ok = 0;
+  await Promise.all(conns.map(async (r) => {
+    try { await r.publish(event); ok++; } catch(e) {}
+  }));
+  return ok;
+}
+const cleanEnough = (t) => !BAD.some(w => t.toLowerCase().includes(w));
+
+async function alreadyPostedToday(conns) {
+  try {
+    const mine = await queryAll(conns, { kinds:[1], authors:[pk], '#t':[TAG], since: dayStart(), limit: 5 }, 7000);
+    return mine.length > 0;
+  } catch(e) { return localStorage.getItem('totd_day') === dayStr(); }
+}
+
+function renderThoughts(events) {
+  const list = $('list');
+  events.sort((a,b) => b.created_at - a.created_at);
+  if (!events.length) {
+    list.innerHTML = '<div class="empty">Nothing here yet.<br>Be the first thought of the day.</div>';
+    return;
+  }
+  let html = '', lastLabel = null;
+  for (const e of events) {
+    const label = labelFor(e.created_at);
+    if (label !== lastLabel) { html += '<div class="day-label">' + esc(label) + '</div>'; lastLabel = label; }
+    html += '<div class="thought"><p>' + esc(e.content).replace(/\n/g,'<br>') + '</p><div class="meta">someone, somewhere</div></div>';
+  }
+  list.innerHTML = html;
+}
+
+async function showStream(conns) {
+  $('gate').classList.add('hidden');
+  $('stream').classList.remove('hidden');
+  $('doneNote').innerHTML = 'You already dropped today\'s thought. <strong>Come back tomorrow</strong> for a fresh one. Meanwhile, here is what everyone else is thinking.';
+  $('list').innerHTML = '<div class="loading">Reading minds...</div>';
+  const events = await queryAll(conns, { kinds:[1], '#t':[TAG], limit: 300 });
+  const valid = events.filter(e => e.content && e.content.length <= 500 && cleanEnough(e.content));
+  renderThoughts(valid);
+}
+
+async function boot() {
+  const box = $('box'), err = $('err');
+  box.addEventListener('input', () => { $('n').textContent = box.value.length; });
+  let conns = await connect();
+  if (!conns.length) {
+    $('boot').innerHTML = 'Could not reach the thought stream.<br>Check your connection and <a href="" style="color:#b3402a">try again</a>.';
+    return;
+  }
+  $('boot').classList.add('hidden');
+  const posted = localStorage.getItem('totd_day') === dayStr() || await alreadyPostedToday(conns);
+  if (posted) { showStream(conns); return; }
+
+  $('gate').classList.remove('hidden');
+  $('drop').addEventListener('click', async () => {
+    err.style.display = 'none';
+    const text = box.value.trim();
+    if (!text) { err.textContent = 'Give us something. Anything.'; err.style.display = 'block'; return; }
+    if (!cleanEnough(text)) { err.textContent = 'Keep it clean-ish. Try again.'; err.style.display = 'block'; return; }
+    $('drop').disabled = true;
+    $('drop').textContent = 'Dropping...';
+    try {
+      if (await alreadyPostedToday(conns)) {
+        try { localStorage.setItem('totd_day', dayStr()); } catch(e) {}
+        showStream(conns);
+        return;
+      }
+      const event = finalizeEvent({
+        kind: 1, created_at: Math.floor(Date.now()/1000),
+        tags: [['t', TAG]], content: text,
+      }, skBytes);
+      const n = await publishAll(conns, event);
+      if (!n) throw new Error('publish failed');
+      try { localStorage.setItem('totd_day', dayStr()); } catch(e) {}
+      showStream(conns);
+    } catch(e) {
+      err.textContent = 'That did not go through. Check your connection and try again.';
+      err.style.display = 'block';
+      $('drop').disabled = false;
+      $('drop').textContent = 'Drop it';
+    }
+  });
+}
+
+boot();
+</script>
+</body>
+</html>
